@@ -13,19 +13,20 @@
 /* One family (Archivo) across its width axis: condensed for display, normal for reading.
    The photo stays pinned; the page slides over it. */
 :root{
-  --bg:#ffffff;--ink:#101010;--grey:#707070;--rule:#e6e6e6;--blue:#2b45b8;
+  --bg:#e9f2fb;--ink:#13203a;--grey:#5d6b82;--rule:#cddbeb;--blue:#24407a;--baby:#bcd6f0;
   --f:"Archivo","Helvetica Neue",Arial,sans-serif;
   --gut:max(20px,env(safe-area-inset-left,0px));
   color-scheme:light;
 }
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f0f0f;--ink:#f1f1f1;--grey:#9a9a9a;--rule:#262626;--blue:#9fb3ff;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0f0f0f;--ink:#f1f1f1;--grey:#9a9a9a;--rule:#262626;--blue:#9fb3ff;color-scheme:dark}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1626;--ink:#e9eff7;--grey:#9aa8bd;--rule:#24324b;--blue:#a9c6ea;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e1626;--ink:#e9eff7;--grey:#9aa8bd;--rule:#24324b;--blue:#a9c6ea;color-scheme:dark}
 *{box-sizing:border-box}
 body{margin:0;background:#000;color:var(--ink);font:400 17px/1.5 var(--f);-webkit-font-smoothing:antialiased}
 img{display:block;max-width:100%}
 a{color:inherit;text-decoration-thickness:1px;text-underline-offset:.2em}
 a:hover{color:var(--blue)}
 :focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.hero h1 .thirty{color:var(--baby,#bcd6f0)}
 .cond{font-stretch:62%;font-weight:800;text-transform:uppercase;letter-spacing:-.005em;line-height:.88}
 
 /* ---- hero: pinned photo ---- */
@@ -48,7 +49,7 @@ section{min-height:100vh;min-height:100svh;padding:72px 0 80px;border-top:1px so
 section.short{min-height:0}
 section:first-child{border-top:0}
 /* alternate sections: crayon blue, everything inside switches via the tokens */
-section.alt{--bg:#2b45b8;--ink:#ffffff;--grey:rgba(255,255,255,.72);--rule:rgba(255,255,255,.24);--blue:#c9dcf3;background:var(--bg);color:var(--ink);border-top:0}
+section.alt{--bg:#1b2a4a;--ink:#ffffff;--grey:rgba(255,255,255,.7);--rule:rgba(255,255,255,.2);--blue:#bcd6f0;background:var(--bg);color:var(--ink);border-top:0}
 section.alt + section{border-top:0}
 section.alt a:hover{color:var(--blue)}
 section.alt .strip img{background:rgba(255,255,255,.12)}
@@ -135,9 +136,6 @@ section.house .strip-wrap{align-self:center;margin-top:24px}
 .bring li{break-inside:avoid;padding:12px 0;border-top:1px solid var(--rule);font-size:1.2rem;counter-increment:b;display:flex;gap:16px}
 .bring li::before{content:counter(b,decimal-leading-zero);color:var(--blue);font-size:.9rem;padding-top:.25em;font-variant-numeric:tabular-nums}
 
-footer{position:relative;z-index:1;background:var(--ink);color:var(--bg);padding:80px var(--gut) max(40px,env(safe-area-inset-bottom,0px))}
-footer p.cond{margin:0;font-size:clamp(2.6rem,8vw,7.5rem)}
-footer .meta{border-top-color:color-mix(in srgb,var(--bg) 30%,transparent);margin-top:48px}
 </style>
 </head>
 <body>
@@ -146,7 +144,7 @@ footer .meta{border-top-color:color-mix(in srgb,var(--bg) 30%,transparent);margi
   <img src="img/tao-crown.jpg" alt="Tao as a small child in a homemade paper crown, chin in hands" width="1280" height="875" fetchpriority="high">
   <div class="shade"></div>
   <div class="hero-in">
-    <h1 class="cond">Tao's 30th<br>birthday weekend</h1>
+    <h1 class="cond">Tao's <span class="thirty">30th</span><br>birthday weekend</h1>
     <div class="meta">
       <span>Friday 13 – Sunday 15 November 2026</span>
       <span>Talton House, Newbold on Stour</span>
@@ -170,7 +168,7 @@ footer .meta{border-top-color:color-mix(in srgb,var(--bg) 30%,transparent);margi
           </div>
           <div class="sub" id="sat">
             <h3 class="subh cond">Saturday <span>14 November</span></h3>
-            <div class="row"><span class="t">Morning</span><span class="w">Help-yourself breakfast, then an optional run and swim</span></div>
+            <div class="row"><span class="t">Morning</span><span class="w">Help-yourself breakfast, then a run and a swim if you fancy it</span></div>
             <div class="row"><span class="t">Midday</span><span class="w">Brunch at the pub</span></div>
             <div class="row"><span class="t">Afternoon</span><span class="w">A slow afternoon at the house<small>Snooker and table tennis in the games room, tennis, board games, or nothing at all.</small></span></div>
             <div class="dressed">
@@ -223,7 +221,7 @@ footer .meta{border-top-color:color-mix(in srgb,var(--bg) 30%,transparent);margi
         <div class="subs" data-subs>
           <div class="sub" id="train">
             <h3 class="subh cond">By train</h3>
-            <p>Paddington to Moreton-in-Marsh is direct and takes about 1h30. It's then a 20-minute cab to the house. Double-check train times before you book.</p>
+            <p>Paddington to Moreton-in-Marsh is direct and takes about 1h30, then it's a 20-minute cab to the house. It's a good idea to double-check train times before you book.</p>
         <div class="trains">
           <div><h4>Friday, there for 3pm</h4><p>11:52 <span>13:22</span></p><p>12:52 <span>14:22</span></p></div>
           <div><h4>Friday evening</h4><p>16:58 <span>18:24</span></p><p>17:57 <span>19:28</span></p><p>18:57 <span>20:21</span></p></div>
@@ -232,7 +230,7 @@ footer .meta{border-top-color:color-mix(in srgb,var(--bg) 30%,transparent);margi
           </div>
           <div class="sub" id="cab">
             <h3 class="subh cond">Cabs from Moreton</h3>
-            <p>Book ahead, especially for evening trains, and post your train in the group chat so people can share.</p>
+            <p>It's a good idea to book a cab ahead, especially for evening trains. Please post your train in the group chat so people can share.</p>
         <div class="cabs">
           <a href="tel:+441608650343"><span>ETC Taxis</span><span>01608 650343</span></a>
           <a href="tel:+447399722777"><span>Andy's Taxis</span><span>07399 722777</span></a>
@@ -241,7 +239,7 @@ footer .meta{border-top-color:color-mix(in srgb,var(--bg) 30%,transparent);margi
           </div>
           <div class="sub" id="car">
             <h3 class="subh cond">Driving</h3>
-            <p>About 2 hours from London via the M40. If you have spare seats, offer them in the group chat.</p>
+            <p>About 2 hours from London via the M40. If you have spare seats, please offer them in the group chat.</p>
           </div>
         </div>
         <div class="map" id="map"></div>
@@ -266,10 +264,6 @@ footer .meta{border-top-color:color-mix(in srgb,var(--bg) 30%,transparent);margi
   </section>
 </div>
 
-<footer>
-  <p class="cond">Any questions,<br>message Tao.</p>
-  <div class="meta"><span>Friday 13 – Sunday 15 November 2026</span><span>Talton House</span><span>CV37 8UB</span></div>
-</footer>
 
 <script>
 (function(){
