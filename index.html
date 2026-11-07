@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Tao's Birthday Weekend</title>
-<meta name="description" content="Tao's birthday weekend at Talton House, 13–15 November 2026.">
+<title>Tao's 30th Birthday Weekend</title>
+<meta name="description" content="Tao's 30th birthday weekend at Talton House, 13–15 November 2026.">
 <script>document.documentElement.classList.add('js')</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -44,7 +44,7 @@ a:hover{color:var(--blue)}
 /* ---- the sheet ---- */
 .sheet{position:relative;z-index:1;background:var(--bg);box-shadow:0 -30px 60px rgba(0,0,0,.25)}
 .grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;padding:0 var(--gut)}
-section{padding:96px 0 104px;border-top:1px solid var(--rule)}
+section{min-height:100vh;min-height:100svh;padding:72px 0 80px;border-top:1px solid var(--rule)}
 section:first-child{border-top:0}
 /* alternate sections: crayon blue, everything inside switches via the tokens */
 section.alt{--bg:#2b45b8;--ink:#ffffff;--grey:rgba(255,255,255,.72);--rule:rgba(255,255,255,.24);--blue:#c9dcf3;background:var(--bg);color:var(--ink);border-top:0}
@@ -52,7 +52,6 @@ section.alt + section{border-top:0}
 section.alt a:hover{color:var(--blue)}
 section.alt .strip img{background:rgba(255,255,255,.12)}
 .sh{grid-column:1/5;align-self:start;position:sticky;top:28px}
-.sh .n{display:block;font-size:.9rem;font-weight:500;color:var(--blue);font-variant-numeric:tabular-nums;margin-bottom:10px}
 .sh h2{margin:0;font-size:clamp(2.6rem,5vw,4.4rem)}
 .body{grid-column:5/13;min-width:0}
 @media (max-width:900px){.sh{grid-column:1/-1;position:static;margin-bottom:36px}.body{grid-column:1/-1}section{padding:64px 0 72px}}
@@ -60,27 +59,23 @@ section.alt .strip img{background:rgba(255,255,255,.12)}
 .lead{font-size:clamp(1.5rem,2.6vw,2.2rem);line-height:1.2;font-weight:400;letter-spacing:-.01em;margin:0;max-width:24ch}
 .lead + p{margin-top:24px;color:var(--grey)}
 
-/* tabs: one row of labels that scrolls sideways when it runs out of room */
-.tabs{margin-top:56px}
-.body > .tabs:first-child{margin-top:6px}
-.tablist{position:relative;display:flex;gap:32px;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--rule);margin-bottom:4px;scroll-padding:0 24px}
-.tablist::-webkit-scrollbar{display:none}
-.tablist.more{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 56px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 56px),transparent)}
-.tab{flex:none;background:none;border:0;padding:0 0 12px;margin:0;cursor:pointer;color:var(--grey);font:inherit;font-stretch:62%;font-weight:800;text-transform:uppercase;font-size:clamp(1.6rem,3vw,2.2rem);line-height:1;letter-spacing:-.005em;transition:color .2s}
-.tab small{font-stretch:100%;font-weight:400;font-size:.9rem;text-transform:none;letter-spacing:0;margin-left:8px}
-.tab:hover{color:var(--ink)}
-.tab[aria-selected="true"]{color:var(--ink)}
-.tab:focus-visible{outline-offset:-2px}
-.tab-ink{position:absolute;left:0;bottom:0;height:3px;width:0;background:var(--blue);transition:transform .35s cubic-bezier(.3,.7,.2,1),width .35s cubic-bezier(.3,.7,.2,1);pointer-events:none}
-.panel[hidden]{display:none}
-.js .panel{animation:panelIn .35s ease both}
-@keyframes panelIn{from{opacity:0;transform:translateY(6px)}}
-.panel > p:first-child{margin-top:20px}
-.js .panel > div.row:first-of-type{border-top:0}
-.nojs{margin:40px 0 6px;font-size:1.6rem}
-.js .nojs{display:none}
-html:not(.js) .tablist{display:none}
-@media (prefers-reduced-motion:reduce){.tab-ink{transition:none}.js .panel{animation:none}}
+/* sub-sections stacked vertically; each heading sticks while you read it */
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+.subs{margin-top:-22px}
+.map + .subs{margin-top:40px}
+.sub + .sub{margin-top:56px}
+.subh{position:sticky;top:0;z-index:2;background:var(--bg);margin:0;padding:22px 0 12px;border-bottom:2px solid var(--ink);display:flex;justify-content:space-between;align-items:baseline;gap:16px;font-size:clamp(1.7rem,3vw,2.3rem)}
+.subh span{font-stretch:100%;font-weight:400;font-size:.95rem;text-transform:none;color:var(--grey);letter-spacing:0}
+.sub > div.row:first-of-type{border-top:0}
+.sub > p:first-of-type{margin-top:18px}
+/* desktop: the sub-sections listed under the section title, current one marked */
+.subnav{display:flex;flex-direction:column;margin-top:28px}
+.subnav a{display:flex;align-items:center;gap:12px;padding:7px 0;text-decoration:none;color:var(--grey);font-size:1.05rem;transition:color .2s}
+.subnav a::before{content:"";width:10px;height:2px;background:currentColor;transition:width .3s,background .2s}
+.subnav a:hover{color:var(--ink)}
+.subnav a.on{color:var(--ink)}
+.subnav a.on::before{width:28px;background:var(--blue)}
+@media (max-width:900px){.subnav{display:none}}
 .row{display:grid;grid-template-columns:120px 1fr;gap:16px;padding:14px 0;border-top:1px solid var(--rule);align-items:baseline}
 .row .t{color:var(--grey);font-size:.95rem}
 .row .w{font-size:clamp(1.15rem,1.8vw,1.4rem);font-weight:500;letter-spacing:-.005em}
@@ -113,7 +108,7 @@ html:not(.js) .tablist{display:none}
 /* travel */
 .addr{font-size:clamp(1.8rem,3.6vw,3rem);margin:0 0 18px}
 .links{display:flex;gap:24px;flex-wrap:wrap;font-size:1rem;margin-bottom:28px}
-.map{position:relative;aspect-ratio:16/9;background:var(--rule);margin-bottom:0;filter:grayscale(1) contrast(1.05)}
+.map{position:relative;height:clamp(200px,26vh,300px);background:var(--rule);margin-bottom:0;filter:grayscale(1) contrast(1.05)}
 .map:hover{filter:none}
 .map iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .trains{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin:24px 0 0}
@@ -144,7 +139,7 @@ footer .meta{border-top-color:color-mix(in srgb,var(--bg) 30%,transparent);margi
   <img src="img/tao-crown.jpg" alt="Tao as a small child in a homemade paper crown, chin in hands" width="1280" height="875" fetchpriority="high">
   <div class="shade"></div>
   <div class="hero-in">
-    <h1 class="cond">Tao's<br>birthday weekend</h1>
+    <h1 class="cond">Tao's 30th<br>birthday weekend</h1>
     <div class="meta">
       <span>Friday 13 – Sunday 15 November 2026</span>
       <span>Talton House, Newbold on Stour</span>
@@ -157,23 +152,17 @@ footer .meta{border-top-color:color-mix(in srgb,var(--bg) 30%,transparent);margi
 <div class="sheet">
   <section>
     <div class="grid">
-      <div class="sh"><span class="n">01</span><h2 class="cond">The weekend</h2></div>
+      <div class="sh"><h2 class="cond">The weekend</h2><nav class="subnav" aria-label="Days"><a href="#fri">Friday</a><a href="#sat">Saturday</a><a href="#sun">Sunday</a></nav></div>
       <div class="body">
-        <div class="tabs" data-tabs="day">
-          <div class="tablist" role="tablist" aria-label="Days">
-            <button class="tab" role="tab" type="button" id="t-fri" aria-controls="p-fri" data-date="2026-11-13">Friday<small>13 Nov</small></button>
-            <button class="tab" role="tab" type="button" id="t-sat" aria-controls="p-sat" data-date="2026-11-14">Saturday<small>14 Nov</small></button>
-            <button class="tab" role="tab" type="button" id="t-sun" aria-controls="p-sun" data-date="2026-11-15">Sunday<small>15 Nov</small></button>
-            <span class="tab-ink" aria-hidden="true"></span>
-          </div>
-          <div class="panel" role="tabpanel" id="p-fri" aria-labelledby="t-fri" tabindex="0">
-            <h3 class="nojs cond">Friday 13 November</h3>
+        <div class="subs" data-subs>
+          <div class="sub" id="fri">
+            <h3 class="subh cond">Friday <span>13 November</span></h3>
             <div class="row"><span class="t">From 3pm</span><span class="w">Arrive and look round the house</span></div>
             <div class="row"><span class="t">Evening</span><span class="w">Pasta and an ice cream bar</span></div>
             <div class="row"><span class="t">Late</span><span class="w">Games night</span></div>
           </div>
-          <div class="panel" role="tabpanel" id="p-sat" aria-labelledby="t-sat" tabindex="0">
-            <h3 class="nojs cond">Saturday 14 November</h3>
+          <div class="sub" id="sat">
+            <h3 class="subh cond">Saturday <span>14 November</span></h3>
             <div class="row"><span class="t">Morning</span><span class="w">Help-yourself breakfast, then an optional run and swim</span></div>
             <div class="row"><span class="t">Midday</span><span class="w">Brunch at the pub</span></div>
             <div class="row"><span class="t">Afternoon</span><span class="w">A slow afternoon at the house<small>Snooker and table tennis in the games room, tennis, board games, or nothing at all.</small></span></div>
@@ -182,8 +171,8 @@ footer .meta{border-top-color:color-mix(in srgb,var(--bg) 30%,transparent);margi
               <div class="row"><span class="t">Evening</span><span class="w">Dinner, drinks and dancing<small>Ottolenghi-style vegetarian dinner. Dress code: something nice, with blue in it.</small></span></div>
             </div>
           </div>
-          <div class="panel" role="tabpanel" id="p-sun" aria-labelledby="t-sun" tabindex="0">
-            <h3 class="nojs cond">Sunday 15 November</h3>
+          <div class="sub" id="sun">
+            <h3 class="subh cond">Sunday <span>15 November</span></h3>
             <div class="row"><span class="t">Morning</span><span class="w">Breakfast, help yourself</span></div>
             <div class="row"><span class="t">Morning</span><span class="w">Clean up together</span></div>
             <div class="row"><span class="t">12 noon</span><span class="w">Check-out</span></div>
@@ -195,7 +184,7 @@ footer .meta{border-top-color:color-mix(in srgb,var(--bg) 30%,transparent);margi
 
   <section class="alt">
     <div class="grid">
-      <div class="sh" style="position:static"><span class="n">02</span><h2 class="cond">The house</h2></div>
+      <div class="sh" style="position:static"><h2 class="cond">The house</h2></div>
       <div class="body">
         <p><a href="https://www.taltonlodge.com/talton-house" target="_blank" rel="noopener">More photos on the Talton website</a></p>
       </div>
@@ -221,29 +210,23 @@ footer .meta{border-top-color:color-mix(in srgb,var(--bg) 30%,transparent);margi
 
   <section>
     <div class="grid">
-      <div class="sh"><span class="n">03</span><h2 class="cond">Getting there</h2></div>
+      <div class="sh"><h2 class="cond">Getting there</h2><nav class="subnav" aria-label="Ways to get there"><a href="#train">By train</a><a href="#cab">Cabs from Moreton</a><a href="#car">Driving</a></nav></div>
       <div class="body">
         <p class="addr cond">Talton House, Newbold on Stour, CV37 8UB</p>
         <div class="links"><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Talton+House+Newbold+on+Stour+CV37+8UB" target="_blank" rel="noopener">Directions</a><a href="https://www.google.com/maps/search/?api=1&amp;query=Talton+House+Newbold+on+Stour+CV37+8UB" target="_blank" rel="noopener">Open in Maps</a></div>
         <div class="map" id="map"></div>
-        <div class="tabs" data-tabs="travel">
-          <div class="tablist" role="tablist" aria-label="Ways to get there">
-            <button class="tab" role="tab" type="button" id="t-train" aria-controls="p-train">By train</button>
-            <button class="tab" role="tab" type="button" id="t-cab" aria-controls="p-cab">Cabs from Moreton</button>
-            <button class="tab" role="tab" type="button" id="t-car" aria-controls="p-car">Driving</button>
-            <span class="tab-ink" aria-hidden="true"></span>
-          </div>
-          <div class="panel" role="tabpanel" id="p-train" aria-labelledby="t-train" tabindex="0">
-            <h3 class="nojs cond">By train</h3>
-            <p>Paddington to Moreton-in-Marsh is direct and takes about 1h30. It's then a 20-minute cab to the house.</p>
+        <div class="subs" data-subs>
+          <div class="sub" id="train">
+            <h3 class="subh cond">By train</h3>
+            <p>Paddington to Moreton-in-Marsh is direct and takes about 1h30. It's then a 20-minute cab to the house. Double-check train times before you book.</p>
         <div class="trains">
           <div><h4>Friday, there for 3pm</h4><p>11:52 <span>13:22</span></p><p>12:52 <span>14:22</span></p></div>
           <div><h4>Friday evening</h4><p>17:57 <span>19:28</span></p><p>18:57 <span>20:21</span></p><p>19:53 <span>21:18</span></p></div>
           <div><h4>Saturday morning</h4><p>07:53 <span>09:18</span></p><p>08:52 <span>10:18</span></p><p>09:50 <span>11:18</span></p></div>
         </div>
           </div>
-          <div class="panel" role="tabpanel" id="p-cab" aria-labelledby="t-cab" tabindex="0">
-            <h3 class="nojs cond">Cabs from Moreton</h3>
+          <div class="sub" id="cab">
+            <h3 class="subh cond">Cabs from Moreton</h3>
             <p>Book ahead, especially for evening trains, and post your train in the group chat so people can share.</p>
         <div class="cabs">
           <a href="tel:+441608650343"><span>ETC Taxis</span><span>01608 650343</span></a>
@@ -251,8 +234,8 @@ footer .meta{border-top-color:color-mix(in srgb,var(--bg) 30%,transparent);margi
           <a href="tel:+447710117471"><span>Cotswold Taxis</span><span>07710 117471</span></a>
         </div>
           </div>
-          <div class="panel" role="tabpanel" id="p-car" aria-labelledby="t-car" tabindex="0">
-            <h3 class="nojs cond">Driving</h3>
+          <div class="sub" id="car">
+            <h3 class="subh cond">Driving</h3>
             <p>About 2 hours from London via the M40. If you have spare seats, offer them in the group chat.</p>
           </div>
         </div>
@@ -262,18 +245,15 @@ footer .meta{border-top-color:color-mix(in srgb,var(--bg) 30%,transparent);margi
 
   <section class="alt">
     <div class="grid">
-      <div class="sh"><span class="n">04</span><h2 class="cond">What to bring</h2></div>
+      <div class="sh"><h2 class="cond">What to bring</h2></div>
       <div class="body">
-        <p class="lead">It'll be around 3–10°C.</p>
-        <ul class="bring" style="margin:40px 0 0">
+        <ul class="bring" style="margin:0">
           <li>Warm layers and a coat</li>
           <li>A nice outfit with blue in it, for Saturday night dinner and dancing</li>
-          <li>Running kit</li>
-          <li>Swimming things</li>
-          <li>Tennis racquet</li>
-          <li>A favourite game</li>
-          <li>Drinks and snacks to share</li>
+          <li>Running, swimming or tennis kit, if you'd like to join in</li>
+          <li>A game you'd like to play, if you have one: a board game, cards or anything else</li>
           <li>A camera</li>
+          <li>Drinks!</li>
         </ul>
       </div>
     </div>
@@ -306,30 +286,18 @@ footer .meta{border-top-color:color-mix(in srgb,var(--bg) 30%,transparent);margi
   addEventListener('pointermove',function(e){if(!down)return;var dx=e.clientX-sx;if(Math.abs(dx)>4){moved=true;s.classList.add('drag')}s.scrollLeft=sl-dx});
   addEventListener('pointerup',function(){if(!down)return;down=false;if(moved){s.classList.remove('drag');go(0)}});
 
-  // tabs: click, arrow keys, sliding underline; the day tabs open on today during the weekend
-  [].forEach.call(document.querySelectorAll('[data-tabs]'),function(box){
-    var list=box.querySelector('.tablist'),tabs=[].slice.call(list.querySelectorAll('.tab')),ink=list.querySelector('.tab-ink'),cur=0;
-    function inkTo(t){ink.style.width=t.offsetWidth+'px';ink.style.transform='translateX('+t.offsetLeft+'px)'}
-    function more(){list.classList.toggle('more',list.scrollLeft+list.clientWidth<list.scrollWidth-4)}
-    function select(i,focus){
-      cur=i;
-      tabs.forEach(function(t,j){var on=j===i;t.setAttribute('aria-selected',on);t.tabIndex=on?0:-1;document.getElementById(t.getAttribute('aria-controls')).hidden=!on});
-      inkTo(tabs[i]);
-      var t=tabs[i],l=t.offsetLeft,r=l+t.offsetWidth;
-      if(l<list.scrollLeft||r>list.scrollLeft+list.clientWidth)list.scrollTo({left:Math.max(0,l-24),behavior:reduce?'auto':'smooth'});
-      if(focus)t.focus();
+  // side lists: mark the sub-section currently under the sticky heading
+  [].forEach.call(document.querySelectorAll('[data-subs]'),function(box){
+    var subs=[].slice.call(box.querySelectorAll('.sub')),links=[].slice.call(box.closest('.grid').querySelectorAll('.subnav a')),on=-1,raf=0;
+    if(!links.length)return;
+    function spy(){
+      // the sub-section taking up the most of the screen wins
+      raf=0;var i=0,best=-1;
+      subs.forEach(function(sub,j){var r=sub.getBoundingClientRect(),v=Math.min(r.bottom,innerHeight)-Math.max(r.top,0);if(v>best){best=v;i=j}});
+      if(i!==on){on=i;links.forEach(function(a,j){a.classList.toggle('on',j===i);if(j===i)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current')})}
     }
-    tabs.forEach(function(t,i){t.addEventListener('click',function(){select(i)})});
-    list.addEventListener('keydown',function(e){
-      var k=e.key,n=tabs.length,i=k==='ArrowRight'?(cur+1)%n:k==='ArrowLeft'?(cur-1+n)%n:k==='Home'?0:k==='End'?n-1:-1;
-      if(i>-1){e.preventDefault();select(i,true)}
-    });
-    list.addEventListener('scroll',more,{passive:true});
-    addEventListener('resize',function(){inkTo(tabs[cur]);more()});
-    var today=new Date(),iso=today.getFullYear()+'-'+String(today.getMonth()+1).padStart(2,'0')+'-'+String(today.getDate()).padStart(2,'0'),start=0;
-    tabs.forEach(function(t,i){if(t.getAttribute('data-date')===iso)start=i});
-    ink.style.transition='none';select(start);more();ink.offsetWidth;ink.style.transition='';
-    if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){inkTo(tabs[cur]);more()});
+    addEventListener('scroll',function(){if(!raf)raf=requestAnimationFrame(spy)},{passive:true});
+    spy();
   });
 
   // live map where embeds are allowed
