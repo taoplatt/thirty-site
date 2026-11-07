@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Tao's Birthday Weekend</title>
 <meta name="description" content="Tao's birthday weekend at Talton House, 13–15 November 2026.">
-<script>document.documentElement.classList.add('js');document.documentElement.dataset.dress=(location.search.match(/dress=([a-d])/)||[,'a'])[1]</script>
+<script>document.documentElement.classList.add('js')</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&display=swap">
@@ -85,46 +85,13 @@ html:not(.js) .tablist{display:none}
 .row .t{color:var(--grey);font-size:.95rem}
 .row .w{font-size:clamp(1.15rem,1.8vw,1.4rem);font-weight:500;letter-spacing:-.005em}
 .row .w small{display:block;font-size:.95rem;font-weight:400;color:var(--grey);letter-spacing:0}
-/* Saturday evening + dress code: four treatments for review (html[data-dress]) */
-.dress{margin:0}
-.dress b{display:block;font-stretch:62%;font-weight:800;text-transform:uppercase;font-size:1.05rem;letter-spacing:.01em;color:var(--blue)}
-.dress span{display:block;font-size:clamp(1.05rem,1.6vw,1.2rem);line-height:1.35}
-
-/* A: margin note. A blue bracket spans exactly the two rows it applies to. */
-[data-dress="a"] .dressed{display:grid;grid-template-columns:minmax(0,1fr) 220px;column-gap:28px}
-[data-dress="a"] .dressed .row{grid-column:1}
-[data-dress="a"] .dressed .row .t{color:var(--blue)}
-[data-dress="a"] .dress{grid-column:2;grid-row:1/span 2;align-self:stretch;margin:10px 0;padding:4px 0 4px 18px;border-left:2px solid var(--blue);display:flex;flex-direction:column;justify-content:center;gap:4px}
-@media (max-width:760px){
-  [data-dress="a"] .dressed{grid-template-columns:minmax(0,1fr)}
-  [data-dress="a"] .dress{grid-column:1;grid-row:3;margin:4px 0 0}
-}
-
-/* B: night. The evening turns into a dark block with the dress code as its header. */
-[data-dress="b"] .dressed{background:#131b33;color:#fff;margin:14px 0 0;padding:4px 24px 6px;--rule:rgba(255,255,255,.14);--grey:rgba(255,255,255,.62)}
-[data-dress="b"] .dress{padding:18px 0 16px;display:flex;gap:16px;align-items:baseline;flex-wrap:wrap}
-[data-dress="b"] .dress b{color:#b8d2ea;width:auto;margin-right:4px}
-[data-dress="b"] .dressed .row:first-of-type{border-top-color:rgba(255,255,255,.3)}
-@media (max-width:640px){[data-dress="b"] .dressed{margin:14px calc(var(--gut) * -1) 0;padding:4px var(--gut) 6px}}
-
-/* C: change of gear. A ruled divider announces the dress code before the evening starts. */
-[data-dress="c"] .dress{display:flex;align-items:center;gap:16px;padding:30px 0 12px;text-align:center}
-[data-dress="c"] .dress::before,[data-dress="c"] .dress::after{content:"";flex:1;height:2px;background:var(--blue)}
-[data-dress="c"] .dress b{display:inline;margin-right:8px}
-[data-dress="c"] .dress span{display:inline;font-size:1.05rem}
-[data-dress="c"] .dress > *{flex:none}
-[data-dress="c"] .dressed .row{border-top-color:color-mix(in srgb,var(--blue) 30%,var(--rule))}
-[data-dress="c"] .dressed .row:first-of-type{border-top:0}
-[data-dress="c"] .dressed .row .t{color:var(--blue)}
-@media (max-width:640px){[data-dress="c"] .dress{flex-wrap:wrap;justify-content:center}[data-dress="c"] .dress::before,[data-dress="c"] .dress::after{flex-basis:100%;height:1px}[data-dress="c"] .dress b,[data-dress="c"] .dress span{display:block;width:100%}}
-
-/* D: footnote. Quiet asterisks on the two times, answered just below. */
-[data-dress="d"] .dressed{display:flex;flex-direction:column}
-[data-dress="d"] .dressed .row .t::after{content:"*";color:var(--blue);margin-left:2px}
-[data-dress="d"] .dress{order:3;padding:14px 0 0;border-top:1px solid var(--rule);display:flex;gap:16px;align-items:baseline}
-[data-dress="d"] .dress b{width:120px;font-size:.95rem;flex:none}
-[data-dress="d"] .dress b::before{content:"* "}
-@media (max-width:520px){[data-dress="d"] .dress b{width:92px}}
+/* Saturday evening: the night block, headed by the dress code */
+.dressed{background:#131b33;color:#fff;margin:14px 0 0;padding:4px 24px 6px;--rule:rgba(255,255,255,.14);--grey:rgba(255,255,255,.62)}
+.dress{margin:0;padding:18px 0 16px;display:flex;gap:16px 20px;align-items:baseline;flex-wrap:wrap}
+.dress b{font-stretch:62%;font-weight:800;text-transform:uppercase;font-size:1.05rem;letter-spacing:.01em;color:#b8d2ea}
+.dress span{font-size:clamp(1.05rem,1.6vw,1.2rem);line-height:1.35}
+.dressed .row:first-of-type{border-top-color:rgba(255,255,255,.3)}
+@media (max-width:640px){.dressed{margin:14px calc(var(--gut) * -1) 0;padding:4px var(--gut) 6px}}
 @media (max-width:520px){.row{grid-template-columns:92px 1fr}}
 
 /* house strip */
