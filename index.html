@@ -85,13 +85,23 @@ html:not(.js) .tablist{display:none}
 .row .t{color:var(--grey);font-size:.95rem}
 .row .w{font-size:clamp(1.15rem,1.8vw,1.4rem);font-weight:500;letter-spacing:-.005em}
 .row .w small{display:block;font-size:.95rem;font-weight:400;color:var(--grey);letter-spacing:0}
-/* Saturday evening: the night block, headed by the dress code */
-.dressed{background:#131b33;color:#fff;margin:14px 0 0;padding:4px 24px 6px;--rule:rgba(255,255,255,.14);--grey:rgba(255,255,255,.62)}
-.dress{margin:0;padding:18px 0 16px;display:flex;gap:16px 20px;align-items:baseline;flex-wrap:wrap}
-.dress b{font-stretch:62%;font-weight:800;text-transform:uppercase;font-size:1.05rem;letter-spacing:.01em;color:#b8d2ea}
-.dress span{font-size:clamp(1.05rem,1.6vw,1.2rem);line-height:1.35}
-.dressed .row:first-of-type{border-top-color:rgba(255,255,255,.3)}
-@media (max-width:640px){.dressed{margin:14px calc(var(--gut) * -1) 0;padding:4px var(--gut) 6px}}
+/* Saturday evening: a ruled divider announces the dress code before dinner and dancing */
+.dress{margin:0;display:flex;align-items:center;gap:16px;padding:30px 0 12px;text-align:center}
+.dress::before,.dress::after{content:"";flex:1;height:2px;background:var(--blue)}
+.dress > *{flex:none}
+.dress b{font-stretch:62%;font-weight:800;text-transform:uppercase;font-size:1.05rem;letter-spacing:.01em;color:var(--blue);margin-right:8px}
+.dress span{font-size:1.05rem;line-height:1.35}
+.dressed .row{border-top-color:color-mix(in srgb,var(--blue) 30%,var(--rule))}
+.dressed .row:first-of-type{border-top:0}
+.dressed .row .t{color:var(--blue)}
+@media (max-width:640px){
+  .dress{flex-wrap:wrap;justify-content:center;gap:0;padding:36px 0 8px}
+  .dress::before{margin-bottom:16px}
+  .dress::after{margin-top:16px}
+  .dress span{margin-top:2px}
+  .dress::before,.dress::after{flex-basis:100%;height:1px}
+  .dress b,.dress span{display:block;width:100%;margin:0}
+}
 @media (max-width:520px){.row{grid-template-columns:92px 1fr}}
 
 /* house strip */
