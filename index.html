@@ -140,6 +140,9 @@ section.house .strip-wrap{align-self:center;margin-top:24px}
 .bring input::after{content:"";width:10px;height:5px;border:2px solid var(--bg);border-top:0;border-right:0;transform:rotate(-45deg) translate(1px,-1px) scale(0);transition:transform .2s}
 .bring input:checked{background:var(--orange);border-color:var(--orange)}
 .bring input:checked::after{transform:rotate(-45deg) translate(1px,-1px) scale(1)}
+.bring label small{display:block;font-size:.95rem;color:var(--grey);margin-top:2px}
+.bring input:checked + span:has(.it){text-decoration:none}
+.bring input:checked + span .it{text-decoration:line-through;text-decoration-color:var(--orange)}
 .bring input:checked + span{opacity:.6;text-decoration:line-through;text-decoration-color:var(--orange)}
 
 </style>
@@ -263,7 +266,7 @@ section.house .strip-wrap{align-self:center;margin-top:24px}
           <li><label><input type="checkbox" data-k="2"><span>Running, swimming or tennis kit, if you'd like to join in</span></label></li>
           <li><label><input type="checkbox" data-k="3"><span>A game you'd like to play, if you have one: a board game, cards or anything else</span></label></li>
           <li><label><input type="checkbox" data-k="4"><span>A camera</span></label></li>
-          <li><label><input type="checkbox" data-k="5"><span>Drinks!</span></label></li>
+          <li><label><input type="checkbox" data-k="5"><span><span class="it">Drinks!</span><small>I'll cover the food and some drinks, but not enough for everyone, so please bring some to share.</small></span></label></li>
         </ul>
       </div>
     </div>
