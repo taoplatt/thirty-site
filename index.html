@@ -45,6 +45,11 @@ a:hover{color:var(--blue)}
 .grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;padding:0 var(--gut)}
 section{padding:96px 0 104px;border-top:1px solid var(--rule)}
 section:first-child{border-top:0}
+/* alternate sections: crayon blue, everything inside switches via the tokens */
+section.alt{--bg:#2b45b8;--ink:#ffffff;--grey:rgba(255,255,255,.72);--rule:rgba(255,255,255,.24);--blue:#c9dcf3;background:var(--bg);color:var(--ink);border-top:0}
+section.alt + section{border-top:0}
+section.alt a:hover{color:var(--blue)}
+section.alt .strip img{background:rgba(255,255,255,.12)}
 .sh{grid-column:1/5;align-self:start;position:sticky;top:28px}
 .sh .n{display:block;font-size:.9rem;font-weight:500;color:var(--blue);font-variant-numeric:tabular-nums;margin-bottom:10px}
 .sh h2{margin:0;font-size:clamp(2.6rem,5vw,4.4rem)}
@@ -170,9 +175,9 @@ footer .meta{border-top-color:color-mix(in srgb,var(--bg) 30%,transparent);margi
     </div>
   </section>
 
-  <section>
+  <section class="alt">
     <div class="grid">
-      <div class="sh"><span class="n">02</span><h2 class="cond">The house</h2></div>
+      <div class="sh" style="position:static"><span class="n">02</span><h2 class="cond">The house</h2></div>
       <div class="body">
         <p><a href="https://www.taltonlodge.com/talton-house" target="_blank" rel="noopener">More photos on the Talton website</a></p>
       </div>
@@ -226,7 +231,7 @@ footer .meta{border-top-color:color-mix(in srgb,var(--bg) 30%,transparent);margi
     </div>
   </section>
 
-  <section>
+  <section class="alt">
     <div class="grid">
       <div class="sh"><span class="n">04</span><h2 class="cond">What to bring</h2></div>
       <div class="body">
