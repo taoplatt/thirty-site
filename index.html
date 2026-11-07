@@ -62,7 +62,8 @@ section.alt .strip img{background:rgba(255,255,255,.12)}
 /* sub-sections stacked vertically; each heading sticks while you read it */
 @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
 .subs{margin-top:-22px}
-.map + .subs{margin-top:40px}
+.links + .subs{margin-top:-6px}
+.subs + .map{margin-top:32px}
 .sub + .sub{margin-top:56px}
 .subh{position:sticky;top:0;z-index:2;background:var(--bg);margin:0;padding:22px 0 12px;border-bottom:2px solid var(--ink);display:flex;justify-content:space-between;align-items:baseline;gap:16px;font-size:clamp(1.7rem,3vw,2.3rem)}
 .subh span{font-stretch:100%;font-weight:400;font-size:.95rem;text-transform:none;color:var(--grey);letter-spacing:0}
@@ -94,10 +95,15 @@ section.alt .strip img{background:rgba(255,255,255,.12)}
 .strip::-webkit-scrollbar{display:none}
 .strip.drag{cursor:grabbing;scroll-snap-type:none}
 /* every photo the same height, each at its own natural width */
-.strip{--h:clamp(240px,52vh,520px)}
+.strip{--h:clamp(260px,58vh,640px)}
+/* the house: heading on top, photo strip centred in the rest of the screen */
+section.house{display:flex}
+section.house > .grid{flex:1;grid-template-rows:auto 1fr}
+section.house .strip-wrap{align-self:center;margin-top:24px}
+@media (max-width:900px){section.house > .grid{grid-template-rows:auto auto 1fr}}
 .strip figure{flex:0 0 auto;margin:0;scroll-snap-align:start}
-.strip img{height:var(--h);width:auto;max-width:none;background:var(--rule);user-select:none;-webkit-user-drag:none}
-@media (max-width:640px){.strip{--h:clamp(200px,34vh,300px)}}
+.strip img{height:var(--h);width:auto;max-width:calc(100vw - 2 * var(--gut));object-fit:cover;background:var(--rule);user-select:none;-webkit-user-drag:none}
+@media (max-width:640px){.strip{--h:clamp(200px,40vh,380px)}}
 .strip figcaption{display:flex;justify-content:space-between;font-size:.9rem;color:var(--grey);padding-top:10px}
 .strip-ctl{display:flex;justify-content:space-between;align-items:center;padding:18px var(--gut) 0;font-size:.95rem}
 .strip-ctl button{font:inherit;color:inherit;background:none;border:0;padding:6px 0;cursor:pointer;text-decoration:underline;text-underline-offset:.2em}
@@ -123,8 +129,7 @@ section.alt .strip img{background:rgba(255,255,255,.12)}
 .body > p{max-width:58ch}
 
 /* bring */
-.bring{list-style:none;margin:0 0 40px;padding:0;columns:2;column-gap:24px;counter-reset:b}
-@media (max-width:560px){.bring{columns:1}}
+.bring{list-style:none;margin:0 0 40px;padding:0;counter-reset:b;max-width:46rem}
 .bring li{break-inside:avoid;padding:12px 0;border-top:1px solid var(--rule);font-size:1.2rem;counter-increment:b;display:flex;gap:16px}
 .bring li::before{content:counter(b,decimal-leading-zero);color:var(--blue);font-size:.9rem;padding-top:.25em;font-variant-numeric:tabular-nums}
 
@@ -182,7 +187,7 @@ footer .meta{border-top-color:color-mix(in srgb,var(--bg) 30%,transparent);margi
     </div>
   </section>
 
-  <section class="alt">
+  <section class="alt house">
     <div class="grid">
       <div class="sh" style="position:static"><h2 class="cond">The house</h2></div>
       <div class="body">
@@ -214,7 +219,6 @@ footer .meta{border-top-color:color-mix(in srgb,var(--bg) 30%,transparent);margi
       <div class="body">
         <p class="addr cond">Talton House, Newbold on Stour, CV37 8UB</p>
         <div class="links"><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Talton+House+Newbold+on+Stour+CV37+8UB" target="_blank" rel="noopener">Directions</a><a href="https://www.google.com/maps/search/?api=1&amp;query=Talton+House+Newbold+on+Stour+CV37+8UB" target="_blank" rel="noopener">Open in Maps</a></div>
-        <div class="map" id="map"></div>
         <div class="subs" data-subs>
           <div class="sub" id="train">
             <h3 class="subh cond">By train</h3>
@@ -239,6 +243,7 @@ footer .meta{border-top-color:color-mix(in srgb,var(--bg) 30%,transparent);margi
             <p>About 2 hours from London via the M40. If you have spare seats, offer them in the group chat.</p>
           </div>
         </div>
+        <div class="map" id="map"></div>
       </div>
     </div>
   </section>
