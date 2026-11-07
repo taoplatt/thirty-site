@@ -13,7 +13,7 @@
 /* One family (Archivo) across its width axis: condensed for display, normal for reading.
    The photo stays pinned; the page slides over it. */
 :root{
-  --bg:#e9f2fb;--ink:#13203a;--grey:#5d6b82;--rule:#cddbeb;--blue:#24407a;--baby:#bcd6f0;--orange:#ee8a3c;
+  --bg:#ffffff;--ink:#13203a;--grey:#5d6b82;--rule:#e1e8f1;--blue:#24407a;--baby:#bcd6f0;--orange:#ee8a3c;
   --f:"Archivo","Helvetica Neue",Arial,sans-serif;
   --gut:max(20px,env(safe-area-inset-left,0px));
   color-scheme:light;
@@ -49,10 +49,12 @@ section{min-height:100vh;min-height:100svh;padding:72px 0 80px;border-top:1px so
 section.short{min-height:0}
 section:first-child{border-top:0}
 /* alternate sections: crayon blue, everything inside switches via the tokens */
-section.alt{--bg:#1b2a4a;--ink:#ffffff;--grey:rgba(255,255,255,.7);--rule:rgba(255,255,255,.2);--blue:#bcd6f0;background:var(--bg);color:var(--ink);border-top:0}
+section.alt{--bg:#e4eefa;--rule:#c8d9ed;background:var(--bg);color:var(--ink);border-top:0}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) section.alt{--bg:#172440;--rule:#2b3c5c}}
+:root[data-theme="dark"] section.alt{--bg:#172440;--rule:#2b3c5c}
 section.alt + section{border-top:0}
 section.alt a:hover{color:var(--orange)}
-section.alt .strip img{background:rgba(255,255,255,.12)}
+section.alt .strip img{background:var(--rule)}
 .sh{grid-column:1/5;align-self:start;position:sticky;top:28px}
 .sh h2{margin:0;font-size:clamp(2.6rem,5vw,4.4rem)}
 .body{grid-column:5/13;min-width:0}
