@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tao's Birthday Weekend</title>
+<meta name="description" content="Tao's birthday weekend at Talton House, 13–15 November 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Option C — Timetable. Plex Sans + Plex Mono (one superfamily).
+   The weekend is mostly times and trains, so it's laid out like an itinerary,
+   with a departure board as the one animated moment. */
+:root{
+  --bg:#f3f3f0;--ink:#111;--grey:#6d6d6a;--rule:#d9d9d4;--card:#fff;
+  --board:#121212;--amber:#ffb81c;--amber-dim:#8a6a26;--blue:#2b45b8;
+  --sans:"IBM Plex Sans","Helvetica Neue",Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141414;--ink:#eee;--grey:#9a9a96;--rule:#2b2b2b;--card:#1b1b1b;--blue:#9fb3ff;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#141414;--ink:#eee;--grey:#9a9a96;--rule:#2b2b2b;--card:#1b1b1b;--blue:#9fb3ff;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:var(--blue);text-underline-offset:.2em}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.mono{font-family:var(--mono)}
+
+/* ---- hero ---- */
+.hero{position:relative;height:100vh;height:100svh;min-height:540px;overflow:hidden;background:#222}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:52% 0}
+.board{position:absolute;left:0;right:0;bottom:0;background:var(--board);color:var(--amber);font-family:var(--mono);font-weight:500;padding:18px max(20px,env(safe-area-inset-left,0px)) max(20px,env(safe-area-inset-bottom,0px))}
+.board-head{display:grid;grid-template-columns:var(--c1,8.6em) 1fr auto;gap:2ch;font-size:.72rem;letter-spacing:.08em;color:#8d8d8d;padding-bottom:8px;border-bottom:1px solid #2a2a2a;margin-bottom:10px}
+.board-row{display:grid;grid-template-columns:auto 1fr auto;gap:3ch;align-items:center}
+.board-row .flap:first-child{flex-wrap:nowrap}
+.flap{display:flex;flex-wrap:wrap;gap:3px;font-size:clamp(1rem,2.4vw,1.9rem);line-height:1}
+.flap i{font-style:normal;display:inline-grid;place-items:center;width:1.02em;height:1.42em;background:linear-gradient(#232323 0 49.5%,#050505 49.5% 50.5%,#1b1b1b 50.5%);border-radius:3px}
+.flap i.sp{background:transparent}
+.board-row .sub{font-size:.85rem;color:#bdbdbd;text-align:right;line-height:1.35}
+@media (max-width:760px){
+    .board-row{grid-template-columns:1fr;gap:10px}
+  .board-row .sub{text-align:left}
+  .flap{font-size:clamp(.95rem,5.2vw,1.4rem)}
+}
+
+/* ---- layout ---- */
+.wrap{max-width:1080px;margin:0 auto;padding:0 max(20px,env(safe-area-inset-left,0px))}
+.top{display:flex;justify-content:space-between;align-items:baseline;gap:24px;flex-wrap:wrap;padding:40px 0;border-bottom:1px solid var(--rule)}
+.top p{margin:0;font-size:1.25rem;max-width:36ch}
+.top .mono{font-size:.9rem}
+section{display:grid;grid-template-columns:240px minmax(0,1fr);gap:24px 48px;padding:72px 0;border-bottom:1px solid var(--rule)}
+@media (max-width:860px){section{grid-template-columns:1fr;padding:56px 0}}
+section > h2{margin:0;font-size:1.6rem;font-weight:600;letter-spacing:-.01em;line-height:1.15}
+section > h2 span{display:block;font:500 .82rem var(--mono);color:var(--grey);margin-top:8px;letter-spacing:0}
+h3{font-size:1.05rem;font-weight:600;margin:40px 0 10px}
+h3:first-child{margin-top:0}
+p{margin:0 0 14px;max-width:60ch}
+.grey{color:var(--grey)}
+
+/* timetable */
+.tt{width:100%;border-collapse:collapse}
+.tt th{font:500 .74rem var(--mono);color:var(--grey);text-align:left;padding:0 0 10px;border-bottom:1.5px solid var(--ink);letter-spacing:.04em}
+.tt td{padding:11px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+.tt td.d{font:600 .9rem var(--mono);width:6.5em}
+.tt td.t{font:400 .9rem var(--mono);color:var(--grey);width:8em;padding-top:13px}
+.tt tr.first td{border-top:1.5px solid var(--ink)}
+.tt tr:first-child.first td{border-top:0}
+.tt small{display:block;color:var(--grey);font-size:.9rem}
+.tt tr.hl td{background:color-mix(in srgb,var(--blue) 8%,transparent)}
+.tt tr.hl td:first-child{box-shadow:inset 3px 0 0 var(--blue)}
+.tt tr.hl td.d{padding-left:10px}
+@media (max-width:520px){.tt td.d{width:4.6em}.tt td.t{width:6.6em}}
+.dress{margin-top:18px;display:flex;gap:12px;align-items:baseline}
+.dress .mono{font-size:.8rem;color:var(--blue);border:1px solid currentColor;padding:2px 6px;white-space:nowrap}
+
+/* photos */
+.photos{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;margin-top:8px}
+.photos figure{margin:0;position:relative}
+.photos figure:first-child{grid-column:span 2;grid-row:span 2}
+.photos img{width:100%;height:100%;aspect-ratio:4/3;object-fit:cover;background:var(--rule)}
+.photos figcaption{position:absolute;left:0;bottom:0;font:500 .7rem var(--mono);background:var(--board);color:var(--amber);padding:3px 6px;letter-spacing:.04em}
+@media (max-width:640px){.photos{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* departures board */
+.dep{background:var(--board);color:var(--amber);font-family:var(--mono);padding:20px 22px 14px;margin:16px 0 10px;border-radius:4px;overflow-x:auto}
+.dep table{width:100%;border-collapse:collapse;min-width:360px}
+.dep th{font-weight:500;font-size:.7rem;color:#8d8d8d;text-align:left;padding:0 0 8px;letter-spacing:.06em}
+.dep td{padding:7px 0;font-size:1.05rem;border-top:1px solid #222}
+.dep td:last-child,.dep th:last-child{text-align:right}
+.dep tr.g td{color:#8d8d8d;font-size:.72rem;letter-spacing:.06em;padding-top:16px;border-top:0}
+.dep tbody tr:not(.g):hover td{color:#fff}
+.cabs{width:100%;border-collapse:collapse;margin:8px 0 0}
+.cabs td{padding:11px 0;border-bottom:1px solid var(--rule)}
+.cabs td:last-child{text-align:right;font-family:var(--mono)}
+.addr{font-size:1.25rem;margin-bottom:10px}
+.links{display:flex;gap:20px;font-family:var(--mono);font-size:.9rem;margin-bottom:20px}
+.map{position:relative;aspect-ratio:16/9;background:var(--rule);border-radius:4px;overflow:hidden}
+.map iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+
+/* bring */
+.list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;column-gap:32px}
+@media (max-width:520px){.list{grid-template-columns:1fr}}
+.list label{display:flex;gap:12px;align-items:baseline;padding:10px 0;border-bottom:1px solid var(--rule);cursor:pointer}
+.list input{position:absolute;opacity:0;pointer-events:none}
+.list .box{font-family:var(--mono);color:var(--grey);flex:none}
+.list .box::before{content:"[ ]"}
+.list input:checked ~ .box::before{content:"[x]";color:var(--blue)}
+.list input:checked ~ span:last-child{color:var(--grey);text-decoration:line-through}
+.list input:focus-visible ~ .box{outline:2px solid var(--blue);outline-offset:2px}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:28px}
+@media (max-width:520px){.pair{grid-template-columns:1fr}}
+.pair b{display:block;font:500 .78rem var(--mono);color:var(--grey);margin-bottom:2px;letter-spacing:.03em}
+
+footer{background:var(--board);color:var(--amber);font-family:var(--mono)}
+footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-top:36px;padding-bottom:max(40px,env(safe-area-inset-bottom,0px));font-size:.95rem}
+footer span:last-child{color:#8d8d8d}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <img src="../img/tao-crown.jpg" alt="Tao as a small child in a homemade paper crown, chin in hands" width="1280" height="875" fetchpriority="high">
+  <div class="board" aria-label="Tao's birthday weekend. Friday 13 November, from 3pm, at Talton House, until Sunday 15 November, noon.">
+    
+    <div class="board-row" aria-hidden="true">
+      <div class="flap" data-text="FRI 1500"></div>
+      <div class="flap" data-text="TAO'S BIRTHDAY WEEKEND"></div>
+      <div class="sub">Talton House, Newbold on Stour<br>until Sun 15 Nov, 12:00</div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="top">
+    <p>Friday 13 to Sunday 15 November 2026. Come for all of it, or just for Saturday.</p>
+    <a class="mono" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Tao%27s%20birthday%20weekend&amp;dates=20261113T150000Z%2F20261115T120000Z&amp;location=Talton%20House%2C%20Newbold%20on%20Stour%2C%20Stratford-upon-Avon%20CV37%208UB" target="_blank" rel="noopener">Add to calendar</a>
+  </div>
+
+  <section>
+    <h2>The weekend<span>13–15 NOV</span></h2>
+    <div>
+      <table class="tt">
+        <thead><tr><th>DAY</th><th>TIME</th><th>WHAT</th></tr></thead>
+        <tbody>
+          <tr class="first"><td class="d">FRI 13</td><td class="t">From 3pm</td><td>Arrive and look round the house</td></tr>
+          <tr><td></td><td class="t">Evening</td><td>Pasta and an ice cream bar</td></tr>
+          <tr><td></td><td class="t">Late</td><td>Games night</td></tr>
+          <tr class="first"><td class="d">SAT 14</td><td class="t">Morning</td><td>Breakfast, help yourself</td></tr>
+          <tr><td></td><td class="t">Morning</td><td>Run, walk, swim, tennis or lawn games</td></tr>
+          <tr><td></td><td class="t">Midday</td><td>Brunch at the pub</td></tr>
+          <tr><td></td><td class="t">Afternoon</td><td>House quiz</td></tr>
+          <tr class="hl"><td class="d"></td><td class="t">Evening</td><td>Birthday dinner<small>Ottolenghi-style, vegetarian</small></td></tr>
+          <tr><td></td><td class="t">Late</td><td>Dancing</td></tr>
+          <tr class="first"><td class="d">SUN 15</td><td class="t">Morning</td><td>Breakfast, help yourself</td></tr>
+          <tr><td></td><td class="t">Morning</td><td>Clean up together</td></tr>
+          <tr><td></td><td class="t">12:00</td><td>Check-out</td></tr>
+        </tbody>
+      </table>
+      <p class="dress"><span class="mono">SAT DRESS CODE</span><span>Something nice, with blue in it.</span></p>
+    </div>
+  </section>
+
+  <section>
+    <h2>The house<span>TALTON HOUSE</span></h2>
+    <div>
+      <p>A natural pool (unheated), a tennis court, a lawn, and a games room with snooker and table tennis. Bedding and towels are provided.</p>
+      <div class="photos">
+        <figure><img src="../img/house-river.jpg" alt="The house from across the river" loading="lazy"><figcaption>HOUSE</figcaption></figure>
+        <figure><img src="../img/lawn.jpg" alt="The lawn" loading="lazy"><figcaption>LAWN</figcaption></figure>
+        <figure><img src="../img/pool.jpg" alt="The natural pool" loading="lazy"><figcaption>POOL</figcaption></figure>
+        <figure><img src="../img/tennis.jpg" alt="The tennis court" loading="lazy"><figcaption>TENNIS</figcaption></figure>
+        <figure><img src="../img/games-room.jpg" alt="The games room" loading="lazy"><figcaption>GAMES ROOM</figcaption></figure>
+        <figure><img src="../img/drawing-room.jpg" alt="The drawing room" loading="lazy"><figcaption>DRAWING ROOM</figcaption></figure>
+        <figure><img src="../img/kitchen.jpg" alt="The kitchen" loading="lazy"><figcaption>KITCHEN</figcaption></figure>
+        <figure><img src="../img/hall.jpg" alt="The hall" loading="lazy"><figcaption>HALL</figcaption></figure>
+        <figure><img src="../img/bedroom.jpg" alt="A double bedroom" loading="lazy"><figcaption>BEDROOM</figcaption></figure>
+        <figure><img src="../img/twin-room.jpg" alt="A twin bedroom" loading="lazy"><figcaption>BEDROOM</figcaption></figure>
+        <figure><img src="../img/twin-room-2.jpg" alt="Another twin bedroom" loading="lazy"><figcaption>BEDROOM</figcaption></figure>
+        <figure><img src="../img/garden-room.jpg" alt="A bedroom with a day bed" loading="lazy"><figcaption>BEDROOM</figcaption></figure>
+      </div>
+      <p style="margin-top:14px"><a href="https://www.taltonlodge.com/talton-house" target="_blank" rel="noopener">More on the Talton website</a></p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Getting there<span>CV37 8UB</span></h2>
+    <div>
+      <p class="addr">Talton House, Newbold on Stour, Stratford-upon-Avon, CV37 8UB</p>
+      <div class="links"><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Talton+House+Newbold+on+Stour+CV37+8UB" target="_blank" rel="noopener">Directions</a><a href="https://www.google.com/maps/search/?api=1&amp;query=Talton+House+Newbold+on+Stour+CV37+8UB" target="_blank" rel="noopener">Open in Maps</a></div>
+      <div class="map" id="map"></div>
+
+      <h3>By train</h3>
+      <p>Paddington to Moreton-in-Marsh is direct and takes about 1h30, then it's a 20-minute cab.</p>
+      <div class="dep">
+        <table>
+          <thead><tr><th>DEP</th><th>FROM</th><th>TO</th><th>ARR</th></tr></thead>
+          <tbody>
+            <tr class="g"><td colspan="4">FRIDAY · THERE FOR 3PM</td></tr>
+            <tr><td>11:52</td><td>Paddington</td><td>Moreton-in-Marsh</td><td>13:22</td></tr>
+            <tr><td>12:52</td><td>Paddington</td><td>Moreton-in-Marsh</td><td>14:22</td></tr>
+            <tr class="g"><td colspan="4">FRIDAY · EVENING</td></tr>
+            <tr><td>17:57</td><td>Paddington</td><td>Moreton-in-Marsh</td><td>19:28</td></tr>
+            <tr><td>18:57</td><td>Paddington</td><td>Moreton-in-Marsh</td><td>20:21</td></tr>
+            <tr><td>19:53</td><td>Paddington</td><td>Moreton-in-Marsh</td><td>21:18</td></tr>
+            <tr class="g"><td colspan="4">SATURDAY · MORNING</td></tr>
+            <tr><td>07:53</td><td>Paddington</td><td>Moreton-in-Marsh</td><td>09:18</td></tr>
+            <tr><td>08:52</td><td>Paddington</td><td>Moreton-in-Marsh</td><td>10:18</td></tr>
+            <tr><td>09:50</td><td>Paddington</td><td>Moreton-in-Marsh</td><td>11:18</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="grey" style="font-size:.9rem">The usual GWR times. Check yours when you book.</p>
+
+      <h3>Cabs from Moreton</h3>
+      <p>Book ahead, especially for evening trains, and post your train in the group chat so people can share.</p>
+      <table class="cabs">
+        <tr><td>ETC Taxis</td><td><a href="tel:+441608650343">01608 650343</a></td></tr>
+        <tr><td>Andy's Taxis</td><td><a href="tel:+447399722777">07399 722777</a></td></tr>
+        <tr><td>Cotswold Taxis</td><td><a href="tel:+447710117471">07710 117471</a></td></tr>
+      </table>
+
+      <h3>Driving</h3>
+      <p>About 2 hours from London via the M40. If you have spare seats, offer them in the group chat.</p>
+    </div>
+  </section>
+
+  <section style="border-bottom:0">
+    <h2>What to bring<span>3–10°C</span></h2>
+    <div>
+      <ul class="list" id="list">
+        <li><label><input type="checkbox" id="b1"><span class="box" aria-hidden="true"></span><span>Warm layers and a coat</span></label></li>
+        <li><label><input type="checkbox" id="b2"><span class="box" aria-hidden="true"></span><span>Boots or wellies</span></label></li>
+        <li><label><input type="checkbox" id="b3"><span class="box" aria-hidden="true"></span><span>Something with blue in it</span></label></li>
+        <li><label><input type="checkbox" id="b4"><span class="box" aria-hidden="true"></span><span>Running kit</span></label></li>
+        <li><label><input type="checkbox" id="b5"><span class="box" aria-hidden="true"></span><span>Swimming things</span></label></li>
+        <li><label><input type="checkbox" id="b6"><span class="box" aria-hidden="true"></span><span>Tennis racquet</span></label></li>
+        <li><label><input type="checkbox" id="b7"><span class="box" aria-hidden="true"></span><span>A favourite game</span></label></li>
+        <li><label><input type="checkbox" id="b8"><span class="box" aria-hidden="true"></span><span>Drinks and snacks to share</span></label></li>
+        <li><label><input type="checkbox" id="b9"><span class="box" aria-hidden="true"></span><span>A camera</span></label></li>
+      </ul>
+      <div class="pair">
+        <div><b>ALREADY THERE</b>Bedding, towels and toiletries</div>
+        <div><b>PLEASE DON'T BRING</b>Plastic confetti, balloons or dogs</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap"><span>ANY QUESTIONS → MESSAGE TAO</span><span>13–15 NOV 2026 · TALTON HOUSE</span></div></footer>
+
+<script>
+(function(){
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var CH="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  // split-flap board: each character cycles, then settles left to right
+  [].forEach.call(document.querySelectorAll('.flap'),function(el,row){
+    var txt=el.getAttribute('data-text'),cells=[];
+    for(var i=0;i<txt.length;i++){var c=document.createElement('i');var ch=txt[i];if(ch===' ')c.className='sp';c.textContent=ch===' '?'':ch;el.appendChild(c);cells.push({el:c,ch:ch})}
+    if(reduce)return;
+    cells.forEach(function(c,i){
+      if(c.ch===' ')return;
+      var n=0,stop=8+i*2+row*6;c.el.textContent='';
+      setTimeout(function spin(){
+        if(n++>=stop){c.el.textContent=c.ch;return}
+        c.el.textContent=CH[Math.floor(Math.random()*CH.length)];
+        setTimeout(spin,45);
+      },400);
+    });
+  });
+
+  // checklist saved on this device
+  var KEY='talton-bring-c';var saved={};try{saved=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){}
+  [].forEach.call(document.querySelectorAll('#list input'),function(b){b.checked=!!saved[b.id];b.onchange=function(){saved[b.id]=b.checked;try{localStorage.setItem(KEY,JSON.stringify(saved))}catch(e){}}});
+
+  if(!/claude/.test(location.hostname)){var f=document.createElement('iframe');f.src="https://www.google.com/maps?q=Talton+House,+Newbold+on+Stour,+CV37+8UB&z=11&output=embed";f.title="Map of Talton House";f.loading="lazy";document.getElementById('map').appendChild(f)}
+  else document.getElementById('map').remove();
+})();
+</script>
+</body>
+</html>
