@@ -45,6 +45,7 @@ a:hover{color:var(--blue)}
 .sheet{position:relative;z-index:1;background:var(--bg);box-shadow:0 -30px 60px rgba(0,0,0,.25)}
 .grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;padding:0 var(--gut)}
 section{min-height:100vh;min-height:100svh;padding:72px 0 80px;border-top:1px solid var(--rule)}
+section.short{min-height:0}
 section:first-child{border-top:0}
 /* alternate sections: crayon blue, everything inside switches via the tokens */
 section.alt{--bg:#2b45b8;--ink:#ffffff;--grey:rgba(255,255,255,.72);--rule:rgba(255,255,255,.24);--blue:#c9dcf3;background:var(--bg);color:var(--ink);border-top:0}
@@ -178,8 +179,7 @@ footer .meta{border-top-color:color-mix(in srgb,var(--bg) 30%,transparent);margi
           </div>
           <div class="sub" id="sun">
             <h3 class="subh cond">Sunday <span>15 November</span></h3>
-            <div class="row"><span class="t">Morning</span><span class="w">Breakfast, help yourself</span></div>
-            <div class="row"><span class="t">Morning</span><span class="w">Clean up together</span></div>
+            <div class="row"><span class="t">Morning</span><span class="w">Help-yourself breakfast, then we clean up together</span></div>
             <div class="row"><span class="t">12 noon</span><span class="w">Check-out</span></div>
           </div>
         </div>
@@ -248,7 +248,7 @@ footer .meta{border-top-color:color-mix(in srgb,var(--bg) 30%,transparent);margi
     </div>
   </section>
 
-  <section class="alt">
+  <section class="alt short">
     <div class="grid">
       <div class="sh"><h2 class="cond">What to bring</h2></div>
       <div class="body">
