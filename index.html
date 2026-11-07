@@ -13,7 +13,7 @@
 /* One family (Archivo) across its width axis: condensed for display, normal for reading.
    The photo stays pinned; the page slides over it. */
 :root{
-  --bg:#e9f2fb;--ink:#13203a;--grey:#5d6b82;--rule:#cddbeb;--blue:#24407a;--baby:#bcd6f0;
+  --bg:#e9f2fb;--ink:#13203a;--grey:#5d6b82;--rule:#cddbeb;--blue:#24407a;--baby:#bcd6f0;--orange:#ee8a3c;
   --f:"Archivo","Helvetica Neue",Arial,sans-serif;
   --gut:max(20px,env(safe-area-inset-left,0px));
   color-scheme:light;
@@ -24,8 +24,8 @@
 body{margin:0;background:#000;color:var(--ink);font:400 17px/1.5 var(--f);-webkit-font-smoothing:antialiased}
 img{display:block;max-width:100%}
 a{color:inherit;text-decoration-thickness:1px;text-underline-offset:.2em}
-a:hover{color:var(--blue)}
-:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+a:hover{color:var(--orange)}
+:focus-visible{outline:2px solid var(--orange);outline-offset:3px}
 .hero h1 .thirty{color:var(--baby,#bcd6f0)}
 .cond{font-stretch:62%;font-weight:800;text-transform:uppercase;letter-spacing:-.005em;line-height:.88}
 
@@ -51,7 +51,7 @@ section:first-child{border-top:0}
 /* alternate sections: crayon blue, everything inside switches via the tokens */
 section.alt{--bg:#1b2a4a;--ink:#ffffff;--grey:rgba(255,255,255,.7);--rule:rgba(255,255,255,.2);--blue:#bcd6f0;background:var(--bg);color:var(--ink);border-top:0}
 section.alt + section{border-top:0}
-section.alt a:hover{color:var(--blue)}
+section.alt a:hover{color:var(--orange)}
 section.alt .strip img{background:rgba(255,255,255,.12)}
 .sh{grid-column:1/5;align-self:start;position:sticky;top:28px}
 .sh h2{margin:0;font-size:clamp(2.6rem,5vw,4.4rem)}
@@ -77,7 +77,7 @@ section.alt .strip img{background:rgba(255,255,255,.12)}
 .subnav a::before{content:"";width:10px;height:2px;background:currentColor;transition:width .3s,background .2s}
 .subnav a:hover{color:var(--ink)}
 .subnav a.on{color:var(--ink)}
-.subnav a.on::before{width:28px;background:var(--blue)}
+.subnav a.on::before{width:28px;background:var(--orange)}
 @media (max-width:900px){.subnav{display:none}}
 .row{display:grid;grid-template-columns:120px 1fr;gap:16px;padding:14px 0;border-top:1px solid var(--rule);align-items:baseline}
 .row .t{color:var(--grey);font-size:.95rem}
@@ -107,12 +107,11 @@ section.house .strip-wrap{align-self:center;margin-top:24px}
 .strip figure{flex:0 0 auto;margin:0;scroll-snap-align:start}
 .strip img{height:var(--h);width:auto;max-width:calc(100vw - 2 * var(--gut));object-fit:cover;background:var(--rule);user-select:none;-webkit-user-drag:none}
 @media (max-width:640px){.strip{--h:clamp(200px,40vh,380px)}}
-.strip figcaption{display:flex;justify-content:space-between;font-size:.9rem;color:var(--grey);padding-top:10px}
+.strip figcaption{font-size:.9rem;color:var(--grey);padding-top:10px}
 .strip-ctl{display:flex;justify-content:space-between;align-items:center;padding:18px var(--gut) 0;font-size:.95rem}
 .strip-ctl button{font:inherit;color:inherit;background:none;border:0;padding:6px 0;cursor:pointer;text-decoration:underline;text-underline-offset:.2em}
-.strip-ctl button:hover{color:var(--blue)}
+.strip-ctl button:hover{color:var(--orange)}
 .strip-ctl button:disabled{opacity:.3;cursor:default;text-decoration:none}
-.strip-ctl .ctr{color:var(--grey);font-variant-numeric:tabular-nums}
 
 /* travel */
 .addr{font-size:clamp(1.8rem,3.6vw,3rem);margin:0 0 18px}
@@ -132,9 +131,14 @@ section.house .strip-wrap{align-self:center;margin-top:24px}
 .body > p{max-width:58ch}
 
 /* bring */
-.bring{list-style:none;margin:0 0 40px;padding:0;counter-reset:b;max-width:46rem}
-.bring li{break-inside:avoid;padding:12px 0;border-top:1px solid var(--rule);font-size:1.2rem;counter-increment:b;display:flex;gap:16px}
-.bring li::before{content:counter(b,decimal-leading-zero);color:var(--blue);font-size:.9rem;padding-top:.25em;font-variant-numeric:tabular-nums}
+.bring{list-style:none;margin:0 0 40px;padding:0;max-width:46rem}
+.bring li{border-top:1px solid var(--rule);font-size:1.2rem}
+.bring label{display:flex;gap:16px;align-items:flex-start;padding:12px 0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.bring input{appearance:none;-webkit-appearance:none;flex:none;width:22px;height:22px;margin:3px 0 0;border:1.5px solid currentColor;border-radius:4px;display:grid;place-items:center;cursor:pointer;transition:background .2s,border-color .2s}
+.bring input::after{content:"";width:10px;height:5px;border:2px solid var(--bg);border-top:0;border-right:0;transform:rotate(-45deg) translate(1px,-1px) scale(0);transition:transform .2s}
+.bring input:checked{background:var(--orange);border-color:var(--orange)}
+.bring input:checked::after{transform:rotate(-45deg) translate(1px,-1px) scale(1)}
+.bring input:checked + span{opacity:.6;text-decoration:line-through;text-decoration-color:var(--orange)}
 
 </style>
 </head>
@@ -194,20 +198,20 @@ section.house .strip-wrap{align-self:center;margin-top:24px}
       </div>
       <div class="strip-wrap">
         <div class="strip" id="strip">
-          <figure><img src="img/house-river.jpg" width="1600" height="1143" alt="The house from across the river" loading="lazy"><figcaption><span>The house</span><span>01</span></figcaption></figure>
-          <figure><img src="img/lawn.jpg" width="1600" height="1143" alt="The lawn" loading="lazy"><figcaption><span>The lawn</span><span>02</span></figcaption></figure>
-          <figure><img src="img/pool.jpg" width="1600" height="1204" alt="The natural pool" loading="lazy"><figcaption><span>Natural pool</span><span>03</span></figcaption></figure>
-          <figure><img src="img/tennis.jpg" width="1600" height="1143" alt="The tennis court" loading="lazy"><figcaption><span>Tennis court</span><span>04</span></figcaption></figure>
-          <figure><img src="img/hall.jpg" width="1600" height="1066" alt="The hall" loading="lazy"><figcaption><span>Hall</span><span>05</span></figcaption></figure>
-          <figure><img src="img/drawing-room.jpg" width="1600" height="1066" alt="The drawing room" loading="lazy"><figcaption><span>Drawing room</span><span>06</span></figcaption></figure>
-          <figure><img src="img/kitchen.jpg" width="1600" height="1205" alt="The kitchen" loading="lazy"><figcaption><span>Kitchen</span><span>07</span></figcaption></figure>
-          <figure><img src="img/games-room.jpg" width="1600" height="1142" alt="The games room" loading="lazy"><figcaption><span>Games room</span><span>08</span></figcaption></figure>
-          <figure><img src="img/bedroom.jpg" width="1600" height="1067" alt="A double bedroom" loading="lazy"><figcaption><span>Bedroom</span><span>09</span></figcaption></figure>
-          <figure><img src="img/twin-room.jpg" width="1600" height="1084" alt="A twin bedroom" loading="lazy"><figcaption><span>Bedroom</span><span>10</span></figcaption></figure>
-          <figure><img src="img/twin-room-2.jpg" width="1600" height="1067" alt="Another twin bedroom" loading="lazy"><figcaption><span>Bedroom</span><span>11</span></figcaption></figure>
-          <figure><img src="img/garden-room.jpg" width="1600" height="1142" alt="A bedroom with a day bed" loading="lazy"><figcaption><span>Bedroom</span><span>12</span></figcaption></figure>
+          <figure><img src="img/house-river.jpg" width="1600" height="1143" alt="The house from across the river" loading="lazy"><figcaption>The house</figcaption></figure>
+          <figure><img src="img/lawn.jpg" width="1600" height="1143" alt="The lawn" loading="lazy"><figcaption>The lawn</figcaption></figure>
+          <figure><img src="img/pool.jpg" width="1600" height="1204" alt="The natural pool" loading="lazy"><figcaption>Natural pool</figcaption></figure>
+          <figure><img src="img/tennis.jpg" width="1600" height="1143" alt="The tennis court" loading="lazy"><figcaption>Tennis court</figcaption></figure>
+          <figure><img src="img/hall.jpg" width="1600" height="1066" alt="The hall" loading="lazy"><figcaption>Hall</figcaption></figure>
+          <figure><img src="img/drawing-room.jpg" width="1600" height="1066" alt="The drawing room" loading="lazy"><figcaption>Drawing room</figcaption></figure>
+          <figure><img src="img/kitchen.jpg" width="1600" height="1205" alt="The kitchen" loading="lazy"><figcaption>Kitchen</figcaption></figure>
+          <figure><img src="img/games-room.jpg" width="1600" height="1142" alt="The games room" loading="lazy"><figcaption>Games room</figcaption></figure>
+          <figure><img src="img/bedroom.jpg" width="1600" height="1067" alt="A double bedroom" loading="lazy"><figcaption>Bedroom</figcaption></figure>
+          <figure><img src="img/twin-room.jpg" width="1600" height="1084" alt="A twin bedroom" loading="lazy"><figcaption>Bedroom</figcaption></figure>
+          <figure><img src="img/twin-room-2.jpg" width="1600" height="1067" alt="Another twin bedroom" loading="lazy"><figcaption>Bedroom</figcaption></figure>
+          <figure><img src="img/garden-room.jpg" width="1600" height="1142" alt="A bedroom with a day bed" loading="lazy"><figcaption>Bedroom</figcaption></figure>
         </div>
-        <div class="strip-ctl"><button type="button" id="prev">Previous</button><span class="ctr" id="ctr">01 / 12</span><button type="button" id="next">Next</button></div>
+        <div class="strip-ctl"><button type="button" id="prev">Previous</button><button type="button" id="next">Next</button></div>
       </div>
     </div>
   </section>
@@ -252,12 +256,12 @@ section.house .strip-wrap{align-self:center;margin-top:24px}
       <div class="sh"><h2 class="cond">What to bring</h2></div>
       <div class="body">
         <ul class="bring" style="margin:0">
-          <li>Warm layers and a coat</li>
-          <li>A nice outfit with blue in it, for Saturday night dinner and dancing</li>
-          <li>Running, swimming or tennis kit, if you'd like to join in</li>
-          <li>A game you'd like to play, if you have one: a board game, cards or anything else</li>
-          <li>A camera</li>
-          <li>Drinks!</li>
+          <li><label><input type="checkbox" data-k="0"><span>Warm layers and a coat</span></label></li>
+          <li><label><input type="checkbox" data-k="1"><span>A nice outfit with blue in it, for Saturday night dinner and dancing</span></label></li>
+          <li><label><input type="checkbox" data-k="2"><span>Running, swimming or tennis kit, if you'd like to join in</span></label></li>
+          <li><label><input type="checkbox" data-k="3"><span>A game you'd like to play, if you have one: a board game, cards or anything else</span></label></li>
+          <li><label><input type="checkbox" data-k="4"><span>A camera</span></label></li>
+          <li><label><input type="checkbox" data-k="5"><span>Drinks!</span></label></li>
         </ul>
       </div>
     </div>
@@ -274,10 +278,10 @@ section.house .strip-wrap{align-self:center;margin-top:24px}
   if(!reduce){addEventListener('scroll',function(){if(!tick){tick=true;requestAnimationFrame(upd)}},{passive:true});upd()}
 
   // photo strip: buttons, counter, drag on desktop
-  var s=document.getElementById('strip'),figs=[].slice.call(s.children),prev=document.getElementById('prev'),next=document.getElementById('next'),ctr=document.getElementById('ctr');
+  var s=document.getElementById('strip'),figs=[].slice.call(s.children),prev=document.getElementById('prev'),next=document.getElementById('next'),ctr=null;
   function idx(){var x=s.scrollLeft,best=0;figs.forEach(function(f,i){if(Math.abs(f.offsetLeft-s.offsetLeft-parseFloat(getComputedStyle(s).paddingLeft)-x)<Math.abs(figs[best].offsetLeft-s.offsetLeft-parseFloat(getComputedStyle(s).paddingLeft)-x))best=i});return best}
   function pad(n){return n<10?'0'+n:''+n}
-  function sync(){var i=idx();ctr.textContent=pad(i+1)+' / '+figs.length;prev.disabled=s.scrollLeft<4;next.disabled=s.scrollLeft>s.scrollWidth-s.clientWidth-4}
+  function sync(){var i=idx();prev.disabled=s.scrollLeft<4;next.disabled=s.scrollLeft>s.scrollWidth-s.clientWidth-4}
   function go(d){var i=Math.max(0,Math.min(figs.length-1,idx()+d));s.scrollTo({left:figs[i].offsetLeft-figs[0].offsetLeft,behavior:reduce?'auto':'smooth'})}
   prev.onclick=function(){go(-1)};next.onclick=function(){go(1)};
   s.addEventListener('scroll',function(){requestAnimationFrame(sync)},{passive:true});sync();
@@ -299,6 +303,10 @@ section.house .strip-wrap{align-self:center;margin-top:24px}
     addEventListener('scroll',function(){if(!raf)raf=requestAnimationFrame(spy)},{passive:true});
     spy();
   });
+
+  // packing list ticks, remembered on this device only
+  var KEY='talton-bring',got={};try{got=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){}
+  [].forEach.call(document.querySelectorAll('.bring input'),function(b){var k=b.getAttribute('data-k');b.checked=!!got[k];b.addEventListener('change',function(){got[k]=b.checked;try{localStorage.setItem(KEY,JSON.stringify(got))}catch(e){}})});
 
   // live map where embeds are allowed
   if(!/claude/.test(location.hostname)){var f=document.createElement('iframe');f.src="https://www.google.com/maps?q=Talton+House,+Newbold+on+Stour,+CV37+8UB&z=11&output=embed";f.title="Map of Talton House";f.loading="lazy";document.getElementById('map').appendChild(f)}
