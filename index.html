@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Tao's Birthday Weekend</title>
 <meta name="description" content="Tao's birthday weekend at Talton House, 13–15 November 2026.">
+<script>document.documentElement.classList.add('js')</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&display=swap">
@@ -59,11 +60,26 @@ section.alt .strip img{background:rgba(255,255,255,.12)}
 .lead{font-size:clamp(1.5rem,2.6vw,2.2rem);line-height:1.2;font-weight:400;letter-spacing:-.01em;margin:0;max-width:24ch}
 .lead + p{margin-top:24px;color:var(--grey)}
 
-/* schedule */
-.day{margin-bottom:56px}
-.day:last-child{margin-bottom:0}
-.day h3{margin:0 0 6px;display:flex;align-items:baseline;justify-content:space-between;gap:16px;font-size:2rem}
-.day h3 span{font-stretch:100%;font-weight:400;font-size:.95rem;text-transform:none;color:var(--grey);letter-spacing:0}
+/* tabs: one row of labels that scrolls sideways when it runs out of room */
+.tabs{margin-top:56px}
+.tablist{position:relative;display:flex;gap:32px;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--rule);margin-bottom:4px;scroll-padding:0 24px}
+.tablist::-webkit-scrollbar{display:none}
+.tablist.more{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 56px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 56px),transparent)}
+.tab{flex:none;background:none;border:0;padding:0 0 12px;margin:0;cursor:pointer;color:var(--grey);font:inherit;font-stretch:62%;font-weight:800;text-transform:uppercase;font-size:clamp(1.6rem,3vw,2.2rem);line-height:1;letter-spacing:-.005em;transition:color .2s}
+.tab small{font-stretch:100%;font-weight:400;font-size:.9rem;text-transform:none;letter-spacing:0;margin-left:8px}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{color:var(--ink)}
+.tab:focus-visible{outline-offset:-2px}
+.tab-ink{position:absolute;left:0;bottom:0;height:3px;width:0;background:var(--blue);transition:transform .35s cubic-bezier(.3,.7,.2,1),width .35s cubic-bezier(.3,.7,.2,1);pointer-events:none}
+.panel[hidden]{display:none}
+.js .panel{animation:panelIn .35s ease both}
+@keyframes panelIn{from{opacity:0;transform:translateY(6px)}}
+.panel > p:first-child{margin-top:20px}
+.js .panel > div.row:first-of-type{border-top:0}
+.nojs{margin:40px 0 6px;font-size:1.6rem}
+.js .nojs{display:none}
+html:not(.js) .tablist{display:none}
+@media (prefers-reduced-motion:reduce){.tab-ink{transition:none}.js .panel{animation:none}}
 .row{display:grid;grid-template-columns:120px 1fr;gap:16px;padding:14px 0;border-top:1px solid var(--rule);align-items:baseline}
 .row .t{color:var(--grey);font-size:.95rem}
 .row .w{font-size:clamp(1.15rem,1.8vw,1.4rem);font-weight:500;letter-spacing:-.005em}
@@ -81,10 +97,11 @@ section.alt .strip img{background:rgba(255,255,255,.12)}
 .strip{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 var(--gut) 8px;scroll-padding:0 var(--gut);scrollbar-width:none;cursor:grab}
 .strip::-webkit-scrollbar{display:none}
 .strip.drag{cursor:grabbing;scroll-snap-type:none}
-.strip figure{flex:0 0 min(78vw,620px);margin:0;scroll-snap-align:start}
-.strip figure:first-child{flex-basis:min(88vw,900px)}
-.strip img{width:100%;aspect-ratio:4/3;object-fit:cover;background:var(--rule);user-select:none;-webkit-user-drag:none}
-.strip figure:first-child img{aspect-ratio:16/10.5}
+/* every photo the same height, each at its own natural width */
+.strip{--h:clamp(240px,52vh,520px)}
+.strip figure{flex:0 0 auto;margin:0;scroll-snap-align:start}
+.strip img{height:var(--h);width:auto;max-width:none;background:var(--rule);user-select:none;-webkit-user-drag:none}
+@media (max-width:640px){.strip{--h:clamp(200px,34vh,300px)}}
 .strip figcaption{display:flex;justify-content:space-between;font-size:.9rem;color:var(--grey);padding-top:10px}
 .strip-ctl{display:flex;justify-content:space-between;align-items:center;padding:18px var(--gut) 0;font-size:.95rem}
 .strip-ctl button{font:inherit;color:inherit;background:none;border:0;padding:6px 0;cursor:pointer;text-decoration:underline;text-underline-offset:.2em}
@@ -95,16 +112,15 @@ section.alt .strip img{background:rgba(255,255,255,.12)}
 /* travel */
 .addr{font-size:clamp(1.8rem,3.6vw,3rem);margin:0 0 18px}
 .links{display:flex;gap:24px;flex-wrap:wrap;font-size:1rem;margin-bottom:28px}
-.map{position:relative;aspect-ratio:16/9;background:var(--rule);margin-bottom:56px;filter:grayscale(1) contrast(1.05)}
+.map{position:relative;aspect-ratio:16/9;background:var(--rule);margin-bottom:0;filter:grayscale(1) contrast(1.05)}
 .map:hover{filter:none}
 .map iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-.sub{font-size:1.4rem;margin:0 0 6px}
-.trains{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin:24px 0 56px}
+.trains{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin:24px 0 0}
 @media (max-width:640px){.trains{grid-template-columns:1fr}}
 .trains h4{margin:0 0 8px;font-size:.95rem;font-weight:500;padding-bottom:8px;border-bottom:2px solid var(--ink)}
 .trains p{margin:0;padding:9px 0;border-bottom:1px solid var(--rule);display:flex;justify-content:space-between;font-size:1.25rem;font-weight:500;font-variant-numeric:tabular-nums}
 .trains p span{color:var(--grey);font-weight:400}
-.cabs{margin:16px 0 56px}
+.cabs{margin:16px 0 0}
 .cabs a{display:flex;justify-content:space-between;padding:14px 0;border-top:1px solid var(--rule);text-decoration:none;font-size:1.15rem}
 .cabs a:last-child{border-bottom:1px solid var(--rule)}
 .cabs a span:last-child{font-variant-numeric:tabular-nums;font-weight:500}
@@ -145,15 +161,21 @@ footer .meta{border-top-color:color-mix(in srgb,var(--bg) 30%,transparent);margi
         <p class="lead">Three days at Talton House. Come for all of it, or just for Saturday.</p>
         <p>Arrive from 3pm on Friday. Check-out is at noon on Sunday.</p>
 
-        <div style="margin-top:64px">
-          <div class="day">
-            <h3 class="cond">Friday <span>13 November</span></h3>
+        <div class="tabs" data-tabs="day">
+          <div class="tablist" role="tablist" aria-label="Days">
+            <button class="tab" role="tab" type="button" id="t-fri" aria-controls="p-fri" data-date="2026-11-13">Friday<small>13 Nov</small></button>
+            <button class="tab" role="tab" type="button" id="t-sat" aria-controls="p-sat" data-date="2026-11-14">Saturday<small>14 Nov</small></button>
+            <button class="tab" role="tab" type="button" id="t-sun" aria-controls="p-sun" data-date="2026-11-15">Sunday<small>15 Nov</small></button>
+            <span class="tab-ink" aria-hidden="true"></span>
+          </div>
+          <div class="panel" role="tabpanel" id="p-fri" aria-labelledby="t-fri" tabindex="0">
+            <h3 class="nojs cond">Friday 13 November</h3>
             <div class="row"><span class="t">From 3pm</span><span class="w">Arrive and look round the house</span></div>
             <div class="row"><span class="t">Evening</span><span class="w">Pasta and an ice cream bar</span></div>
             <div class="row"><span class="t">Late</span><span class="w">Games night</span></div>
           </div>
-          <div class="day">
-            <h3 class="cond">Saturday <span>14 November</span></h3>
+          <div class="panel" role="tabpanel" id="p-sat" aria-labelledby="t-sat" tabindex="0">
+            <h3 class="nojs cond">Saturday 14 November</h3>
             <div class="row"><span class="t">Morning</span><span class="w">Breakfast, help yourself</span></div>
             <div class="row"><span class="t">Morning</span><span class="w">Run, walk, swim, tennis or lawn games</span></div>
             <div class="row"><span class="t">Midday</span><span class="w">Brunch at the pub</span></div>
@@ -164,8 +186,8 @@ footer .meta{border-top-color:color-mix(in srgb,var(--bg) 30%,transparent);margi
               <p class="dress"><b>Dress code</b><span>Something nice, with blue in it</span></p>
             </div>
           </div>
-          <div class="day">
-            <h3 class="cond">Sunday <span>15 November</span></h3>
+          <div class="panel" role="tabpanel" id="p-sun" aria-labelledby="t-sun" tabindex="0">
+            <h3 class="nojs cond">Sunday 15 November</h3>
             <div class="row"><span class="t">Morning</span><span class="w">Breakfast, help yourself</span></div>
             <div class="row"><span class="t">Morning</span><span class="w">Clean up together</span></div>
             <div class="row"><span class="t">12 noon</span><span class="w">Check-out</span></div>
@@ -183,18 +205,18 @@ footer .meta{border-top-color:color-mix(in srgb,var(--bg) 30%,transparent);margi
       </div>
       <div class="strip-wrap">
         <div class="strip" id="strip">
-          <figure><img src="img/house-river.jpg" alt="The house from across the river" loading="lazy"><figcaption><span>The house</span><span>01</span></figcaption></figure>
-          <figure><img src="img/lawn.jpg" alt="The lawn" loading="lazy"><figcaption><span>The lawn</span><span>02</span></figcaption></figure>
-          <figure><img src="img/pool.jpg" alt="The natural pool" loading="lazy"><figcaption><span>Natural pool</span><span>03</span></figcaption></figure>
-          <figure><img src="img/tennis.jpg" alt="The tennis court" loading="lazy"><figcaption><span>Tennis court</span><span>04</span></figcaption></figure>
-          <figure><img src="img/hall.jpg" alt="The hall" loading="lazy"><figcaption><span>Hall</span><span>05</span></figcaption></figure>
-          <figure><img src="img/drawing-room.jpg" alt="The drawing room" loading="lazy"><figcaption><span>Drawing room</span><span>06</span></figcaption></figure>
-          <figure><img src="img/kitchen.jpg" alt="The kitchen" loading="lazy"><figcaption><span>Kitchen</span><span>07</span></figcaption></figure>
-          <figure><img src="img/games-room.jpg" alt="The games room" loading="lazy"><figcaption><span>Games room</span><span>08</span></figcaption></figure>
-          <figure><img src="img/bedroom.jpg" alt="A double bedroom" loading="lazy"><figcaption><span>Bedroom</span><span>09</span></figcaption></figure>
-          <figure><img src="img/twin-room.jpg" alt="A twin bedroom" loading="lazy"><figcaption><span>Bedroom</span><span>10</span></figcaption></figure>
-          <figure><img src="img/twin-room-2.jpg" alt="Another twin bedroom" loading="lazy"><figcaption><span>Bedroom</span><span>11</span></figcaption></figure>
-          <figure><img src="img/garden-room.jpg" alt="A bedroom with a day bed" loading="lazy"><figcaption><span>Bedroom</span><span>12</span></figcaption></figure>
+          <figure><img src="img/house-river.jpg" width="1600" height="1143" alt="The house from across the river" loading="lazy"><figcaption><span>The house</span><span>01</span></figcaption></figure>
+          <figure><img src="img/lawn.jpg" width="1600" height="1143" alt="The lawn" loading="lazy"><figcaption><span>The lawn</span><span>02</span></figcaption></figure>
+          <figure><img src="img/pool.jpg" width="1600" height="1204" alt="The natural pool" loading="lazy"><figcaption><span>Natural pool</span><span>03</span></figcaption></figure>
+          <figure><img src="img/tennis.jpg" width="1600" height="1143" alt="The tennis court" loading="lazy"><figcaption><span>Tennis court</span><span>04</span></figcaption></figure>
+          <figure><img src="img/hall.jpg" width="1600" height="1066" alt="The hall" loading="lazy"><figcaption><span>Hall</span><span>05</span></figcaption></figure>
+          <figure><img src="img/drawing-room.jpg" width="1600" height="1066" alt="The drawing room" loading="lazy"><figcaption><span>Drawing room</span><span>06</span></figcaption></figure>
+          <figure><img src="img/kitchen.jpg" width="1600" height="1205" alt="The kitchen" loading="lazy"><figcaption><span>Kitchen</span><span>07</span></figcaption></figure>
+          <figure><img src="img/games-room.jpg" width="1600" height="1142" alt="The games room" loading="lazy"><figcaption><span>Games room</span><span>08</span></figcaption></figure>
+          <figure><img src="img/bedroom.jpg" width="1600" height="1067" alt="A double bedroom" loading="lazy"><figcaption><span>Bedroom</span><span>09</span></figcaption></figure>
+          <figure><img src="img/twin-room.jpg" width="1600" height="1084" alt="A twin bedroom" loading="lazy"><figcaption><span>Bedroom</span><span>10</span></figcaption></figure>
+          <figure><img src="img/twin-room-2.jpg" width="1600" height="1067" alt="Another twin bedroom" loading="lazy"><figcaption><span>Bedroom</span><span>11</span></figcaption></figure>
+          <figure><img src="img/garden-room.jpg" width="1600" height="1142" alt="A bedroom with a day bed" loading="lazy"><figcaption><span>Bedroom</span><span>12</span></figcaption></figure>
         </div>
         <div class="strip-ctl"><button type="button" id="prev">Previous</button><span class="ctr" id="ctr">01 / 12</span><button type="button" id="next">Next</button></div>
       </div>
@@ -208,25 +230,36 @@ footer .meta{border-top-color:color-mix(in srgb,var(--bg) 30%,transparent);margi
         <p class="addr cond">Talton House, Newbold on Stour, CV37 8UB</p>
         <div class="links"><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Talton+House+Newbold+on+Stour+CV37+8UB" target="_blank" rel="noopener">Directions</a><a href="https://www.google.com/maps/search/?api=1&amp;query=Talton+House+Newbold+on+Stour+CV37+8UB" target="_blank" rel="noopener">Open in Maps</a></div>
         <div class="map" id="map"></div>
-
-        <h3 class="sub cond">By train</h3>
-        <p>Paddington to Moreton-in-Marsh is direct and takes about 1h30. It's then a 20-minute cab to the house.</p>
+        <div class="tabs" data-tabs="travel">
+          <div class="tablist" role="tablist" aria-label="Ways to get there">
+            <button class="tab" role="tab" type="button" id="t-train" aria-controls="p-train">By train</button>
+            <button class="tab" role="tab" type="button" id="t-cab" aria-controls="p-cab">Cabs from Moreton</button>
+            <button class="tab" role="tab" type="button" id="t-car" aria-controls="p-car">Driving</button>
+            <span class="tab-ink" aria-hidden="true"></span>
+          </div>
+          <div class="panel" role="tabpanel" id="p-train" aria-labelledby="t-train" tabindex="0">
+            <h3 class="nojs cond">By train</h3>
+            <p>Paddington to Moreton-in-Marsh is direct and takes about 1h30. It's then a 20-minute cab to the house.</p>
         <div class="trains">
           <div><h4>Friday, there for 3pm</h4><p>11:52 <span>13:22</span></p><p>12:52 <span>14:22</span></p></div>
           <div><h4>Friday evening</h4><p>17:57 <span>19:28</span></p><p>18:57 <span>20:21</span></p><p>19:53 <span>21:18</span></p></div>
           <div><h4>Saturday morning</h4><p>07:53 <span>09:18</span></p><p>08:52 <span>10:18</span></p><p>09:50 <span>11:18</span></p></div>
         </div>
-
-        <h3 class="sub cond">Cabs from Moreton</h3>
-        <p>Book ahead, especially for evening trains, and post your train in the group chat so people can share.</p>
+          </div>
+          <div class="panel" role="tabpanel" id="p-cab" aria-labelledby="t-cab" tabindex="0">
+            <h3 class="nojs cond">Cabs from Moreton</h3>
+            <p>Book ahead, especially for evening trains, and post your train in the group chat so people can share.</p>
         <div class="cabs">
           <a href="tel:+441608650343"><span>ETC Taxis</span><span>01608 650343</span></a>
           <a href="tel:+447399722777"><span>Andy's Taxis</span><span>07399 722777</span></a>
           <a href="tel:+447710117471"><span>Cotswold Taxis</span><span>07710 117471</span></a>
         </div>
-
-        <h3 class="sub cond">Driving</h3>
-        <p>About 2 hours from London via the M40. If you have spare seats, offer them in the group chat.</p>
+          </div>
+          <div class="panel" role="tabpanel" id="p-car" aria-labelledby="t-car" tabindex="0">
+            <h3 class="nojs cond">Driving</h3>
+            <p>About 2 hours from London via the M40. If you have spare seats, offer them in the group chat.</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -276,6 +309,32 @@ footer .meta{border-top-color:color-mix(in srgb,var(--bg) 30%,transparent);margi
   s.addEventListener('pointerdown',function(e){if(e.pointerType!=='mouse')return;down=true;moved=false;sx=e.clientX;sl=s.scrollLeft});
   addEventListener('pointermove',function(e){if(!down)return;var dx=e.clientX-sx;if(Math.abs(dx)>4){moved=true;s.classList.add('drag')}s.scrollLeft=sl-dx});
   addEventListener('pointerup',function(){if(!down)return;down=false;if(moved){s.classList.remove('drag');go(0)}});
+
+  // tabs: click, arrow keys, sliding underline; the day tabs open on today during the weekend
+  [].forEach.call(document.querySelectorAll('[data-tabs]'),function(box){
+    var list=box.querySelector('.tablist'),tabs=[].slice.call(list.querySelectorAll('.tab')),ink=list.querySelector('.tab-ink'),cur=0;
+    function inkTo(t){ink.style.width=t.offsetWidth+'px';ink.style.transform='translateX('+t.offsetLeft+'px)'}
+    function more(){list.classList.toggle('more',list.scrollLeft+list.clientWidth<list.scrollWidth-4)}
+    function select(i,focus){
+      cur=i;
+      tabs.forEach(function(t,j){var on=j===i;t.setAttribute('aria-selected',on);t.tabIndex=on?0:-1;document.getElementById(t.getAttribute('aria-controls')).hidden=!on});
+      inkTo(tabs[i]);
+      var t=tabs[i],l=t.offsetLeft,r=l+t.offsetWidth;
+      if(l<list.scrollLeft||r>list.scrollLeft+list.clientWidth)list.scrollTo({left:Math.max(0,l-24),behavior:reduce?'auto':'smooth'});
+      if(focus)t.focus();
+    }
+    tabs.forEach(function(t,i){t.addEventListener('click',function(){select(i)})});
+    list.addEventListener('keydown',function(e){
+      var k=e.key,n=tabs.length,i=k==='ArrowRight'?(cur+1)%n:k==='ArrowLeft'?(cur-1+n)%n:k==='Home'?0:k==='End'?n-1:-1;
+      if(i>-1){e.preventDefault();select(i,true)}
+    });
+    list.addEventListener('scroll',more,{passive:true});
+    addEventListener('resize',function(){inkTo(tabs[cur]);more()});
+    var today=new Date(),iso=today.getFullYear()+'-'+String(today.getMonth()+1).padStart(2,'0')+'-'+String(today.getDate()).padStart(2,'0'),start=0;
+    tabs.forEach(function(t,i){if(t.getAttribute('data-date')===iso)start=i});
+    ink.style.transition='none';select(start);more();ink.offsetWidth;ink.style.transition='';
+    if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){inkTo(tabs[cur]);more()});
+  });
 
   // live map where embeds are allowed
   if(!/claude/.test(location.hostname)){var f=document.createElement('iframe');f.src="https://www.google.com/maps?q=Talton+House,+Newbold+on+Stour,+CV37+8UB&z=11&output=embed";f.title="Map of Talton House";f.loading="lazy";document.getElementById('map').appendChild(f)}
