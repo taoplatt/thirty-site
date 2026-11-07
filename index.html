@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Tao's Birthday Weekend</title>
-<meta name="description" content="Tao's birthday weekend at Talton House, 13–15 November 2026.">
+<title>Tao's 30th Birthday Weekend</title>
+<meta name="description" content="Tao's 30th birthday weekend at Talton House, 13–15 November 2026.">
 <script>document.documentElement.classList.add('js')</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -44,7 +44,7 @@ a:hover{color:var(--blue)}
 /* ---- the sheet ---- */
 .sheet{position:relative;z-index:1;background:var(--bg);box-shadow:0 -30px 60px rgba(0,0,0,.25)}
 .grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;padding:0 var(--gut)}
-section{padding:96px 0 104px;border-top:1px solid var(--rule)}
+section{min-height:100vh;min-height:100svh;padding:72px 0 80px;border-top:1px solid var(--rule)}
 section:first-child{border-top:0}
 /* alternate sections: crayon blue, everything inside switches via the tokens */
 section.alt{--bg:#2b45b8;--ink:#ffffff;--grey:rgba(255,255,255,.72);--rule:rgba(255,255,255,.24);--blue:#c9dcf3;background:var(--bg);color:var(--ink);border-top:0}
@@ -52,7 +52,6 @@ section.alt + section{border-top:0}
 section.alt a:hover{color:var(--blue)}
 section.alt .strip img{background:rgba(255,255,255,.12)}
 .sh{grid-column:1/5;align-self:start;position:sticky;top:28px}
-.sh .n{display:block;font-size:.9rem;font-weight:500;color:var(--blue);font-variant-numeric:tabular-nums;margin-bottom:10px}
 .sh h2{margin:0;font-size:clamp(2.6rem,5vw,4.4rem)}
 .body{grid-column:5/13;min-width:0}
 @media (max-width:900px){.sh{grid-column:1/-1;position:static;margin-bottom:36px}.body{grid-column:1/-1}section{padding:64px 0 72px}}
@@ -113,7 +112,7 @@ html:not(.js) .tablist{display:none}
 /* travel */
 .addr{font-size:clamp(1.8rem,3.6vw,3rem);margin:0 0 18px}
 .links{display:flex;gap:24px;flex-wrap:wrap;font-size:1rem;margin-bottom:28px}
-.map{position:relative;aspect-ratio:16/9;background:var(--rule);margin-bottom:0;filter:grayscale(1) contrast(1.05)}
+.map{position:relative;height:clamp(200px,26vh,300px);background:var(--rule);margin-bottom:0;filter:grayscale(1) contrast(1.05)}
 .map:hover{filter:none}
 .map iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .trains{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin:24px 0 0}
@@ -144,7 +143,7 @@ footer .meta{border-top-color:color-mix(in srgb,var(--bg) 30%,transparent);margi
   <img src="img/tao-crown.jpg" alt="Tao as a small child in a homemade paper crown, chin in hands" width="1280" height="875" fetchpriority="high">
   <div class="shade"></div>
   <div class="hero-in">
-    <h1 class="cond">Tao's<br>birthday weekend</h1>
+    <h1 class="cond">Tao's 30th<br>birthday weekend</h1>
     <div class="meta">
       <span>Friday 13 – Sunday 15 November 2026</span>
       <span>Talton House, Newbold on Stour</span>
@@ -157,7 +156,7 @@ footer .meta{border-top-color:color-mix(in srgb,var(--bg) 30%,transparent);margi
 <div class="sheet">
   <section>
     <div class="grid">
-      <div class="sh"><span class="n">01</span><h2 class="cond">The weekend</h2></div>
+      <div class="sh"><h2 class="cond">The weekend</h2></div>
       <div class="body">
         <div class="tabs" data-tabs="day">
           <div class="tablist" role="tablist" aria-label="Days">
@@ -195,7 +194,7 @@ footer .meta{border-top-color:color-mix(in srgb,var(--bg) 30%,transparent);margi
 
   <section class="alt">
     <div class="grid">
-      <div class="sh" style="position:static"><span class="n">02</span><h2 class="cond">The house</h2></div>
+      <div class="sh" style="position:static"><h2 class="cond">The house</h2></div>
       <div class="body">
         <p><a href="https://www.taltonlodge.com/talton-house" target="_blank" rel="noopener">More photos on the Talton website</a></p>
       </div>
@@ -221,7 +220,7 @@ footer .meta{border-top-color:color-mix(in srgb,var(--bg) 30%,transparent);margi
 
   <section>
     <div class="grid">
-      <div class="sh"><span class="n">03</span><h2 class="cond">Getting there</h2></div>
+      <div class="sh"><h2 class="cond">Getting there</h2></div>
       <div class="body">
         <p class="addr cond">Talton House, Newbold on Stour, CV37 8UB</p>
         <div class="links"><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Talton+House+Newbold+on+Stour+CV37+8UB" target="_blank" rel="noopener">Directions</a><a href="https://www.google.com/maps/search/?api=1&amp;query=Talton+House+Newbold+on+Stour+CV37+8UB" target="_blank" rel="noopener">Open in Maps</a></div>
@@ -235,7 +234,7 @@ footer .meta{border-top-color:color-mix(in srgb,var(--bg) 30%,transparent);margi
           </div>
           <div class="panel" role="tabpanel" id="p-train" aria-labelledby="t-train" tabindex="0">
             <h3 class="nojs cond">By train</h3>
-            <p>Paddington to Moreton-in-Marsh is direct and takes about 1h30. It's then a 20-minute cab to the house.</p>
+            <p>Paddington to Moreton-in-Marsh is direct and takes about 1h30. It's then a 20-minute cab to the house. Double-check train times before you book.</p>
         <div class="trains">
           <div><h4>Friday, there for 3pm</h4><p>11:52 <span>13:22</span></p><p>12:52 <span>14:22</span></p></div>
           <div><h4>Friday evening</h4><p>17:57 <span>19:28</span></p><p>18:57 <span>20:21</span></p><p>19:53 <span>21:18</span></p></div>
@@ -262,16 +261,13 @@ footer .meta{border-top-color:color-mix(in srgb,var(--bg) 30%,transparent);margi
 
   <section class="alt">
     <div class="grid">
-      <div class="sh"><span class="n">04</span><h2 class="cond">What to bring</h2></div>
+      <div class="sh"><h2 class="cond">What to bring</h2></div>
       <div class="body">
-        <p class="lead">It'll be around 3–10°C.</p>
-        <ul class="bring" style="margin:40px 0 0">
+        <ul class="bring" style="margin:0">
           <li>Warm layers and a coat</li>
           <li>A nice outfit with blue in it, for Saturday night dinner and dancing</li>
-          <li>Running kit</li>
-          <li>Swimming things</li>
-          <li>Tennis racquet</li>
-          <li>A favourite game</li>
+          <li>Running, swimming or tennis kit, if you'd like to join in</li>
+          <li>A game you'd like to play, if you have one: a board game, cards or anything else</li>
           <li>Drinks and snacks to share</li>
           <li>A camera</li>
         </ul>
