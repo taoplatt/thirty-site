@@ -83,11 +83,12 @@ section.alt .strip img{background:rgba(255,255,255,.12)}
 .row .w{font-size:clamp(1.15rem,1.8vw,1.4rem);font-weight:500;letter-spacing:-.005em}
 .row .w small{display:block;font-size:.95rem;font-weight:400;color:var(--grey);letter-spacing:0}
 /* Saturday evening: a ruled divider marks the start of the birthday party */
-.dress{margin:0;display:flex;align-items:center;gap:16px;padding:30px 0 10px}
+.dress{margin:0;display:flex;align-items:center;gap:16px;padding:10px 0 6px}
 .dress::before,.dress::after{content:"";flex:1;height:2px;background:var(--blue)}
 .dress b{flex:none;font-stretch:62%;font-weight:800;text-transform:uppercase;font-size:1.35rem;letter-spacing:.01em;color:var(--blue)}
 .dressed .row:first-of-type{border-top:0}
-.dressed .row .t{color:var(--blue)}
+.dressed .row .t,.dressed .row .w{color:var(--blue)}
+.dressed .row .w small{color:color-mix(in srgb,var(--blue) 72%,var(--bg))}
 @media (max-width:520px){.row{grid-template-columns:92px 1fr}}
 
 /* house strip */
@@ -163,9 +164,9 @@ footer .meta{border-top-color:color-mix(in srgb,var(--bg) 30%,transparent);margi
         <div class="subs" data-subs>
           <div class="sub" id="fri">
             <h3 class="subh cond">Friday <span>13 November</span></h3>
-            <div class="row"><span class="t">From 3pm</span><span class="w">Arrive and look round the house</span></div>
+            <div class="row"><span class="t">From 3pm</span><span class="w">Arrive and explore</span></div>
             <div class="row"><span class="t">Evening</span><span class="w">Pasta and an ice cream bar</span></div>
-            <div class="row"><span class="t">Late</span><span class="w">Games night</span></div>
+            <div class="row"><span class="t">Late</span><span class="w">Games, drinks and chill</span></div>
           </div>
           <div class="sub" id="sat">
             <h3 class="subh cond">Saturday <span>14 November</span></h3>
@@ -179,7 +180,7 @@ footer .meta{border-top-color:color-mix(in srgb,var(--bg) 30%,transparent);margi
           </div>
           <div class="sub" id="sun">
             <h3 class="subh cond">Sunday <span>15 November</span></h3>
-            <div class="row"><span class="t">Morning</span><span class="w">Help-yourself breakfast, then we clean up together</span></div>
+            <div class="row"><span class="t">Morning</span><span class="w">Help-yourself breakfast and clean-up</span></div>
             <div class="row"><span class="t">12 noon</span><span class="w">Check-out</span></div>
           </div>
         </div>
@@ -296,9 +297,9 @@ footer .meta{border-top-color:color-mix(in srgb,var(--bg) 30%,transparent);margi
     var subs=[].slice.call(box.querySelectorAll('.sub')),links=[].slice.call(box.closest('.grid').querySelectorAll('.subnav a')),on=-1,raf=0;
     if(!links.length)return;
     function spy(){
-      // the sub-section taking up the most of the screen wins
-      raf=0;var i=0,best=-1;
-      subs.forEach(function(sub,j){var r=sub.getBoundingClientRect(),v=Math.min(r.bottom,innerHeight)-Math.max(r.top,0);if(v>best){best=v;i=j}});
+      // the last sub-section whose top has reached the upper part of the screen; the first until then
+      raf=0;var i=0,line=Math.min(160,innerHeight*.25);
+      subs.forEach(function(sub,j){if(sub.getBoundingClientRect().top<=line)i=j});
       if(i!==on){on=i;links.forEach(function(a,j){a.classList.toggle('on',j===i);if(j===i)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current')})}
     }
     addEventListener('scroll',function(){if(!raf)raf=requestAnimationFrame(spy)},{passive:true});
