@@ -160,7 +160,7 @@ section.house .strip-wrap{align-self:center;margin-top:24px}
 /* 30 birthdays: one screen tall, a sideways film strip of every birthday photo */
 section.bdays{display:flex;border-top:0}
 section.bdays > .grid{flex:1;grid-template-rows:auto 1fr}
-section.bdays .sh{grid-column:1/-1}
+section.bdays .sh{grid-column:1/-1;position:static}
 .film{grid-column:1/-1;align-self:stretch;display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x proximity;scroll-padding-inline:var(--gut);margin:24px calc(var(--gut) * -1) 0;padding:0 var(--gut) 14px;scrollbar-width:thin}
 .film figure{flex:0 0 auto;margin:0;scroll-snap-align:start;display:flex;flex-direction:column}
 .film .yr{display:flex;align-items:baseline;gap:8px;padding:0 0 12px;border-bottom:2px solid var(--ink);margin-bottom:12px;position:relative}
@@ -188,34 +188,6 @@ section.bdays .sh{grid-column:1/-1}
 </header>
 
 <div class="sheet">
-  <section class="bdays">
-    <div class="grid">
-      <div class="sh"><h2 class="cond">Some birthday pics!</h2></div>
-      <div class="film" aria-label="Photos from each birthday, 1997 to 2026">
-          <figure><div class="yr"><b class="cond">1997</b><span>1st</span></div><img src="img/birthdays/1997.jpg" width="805" height="1280" alt="Tao's 1st birthday, 1997" loading="lazy"></figure>
-          <figure><div class="yr"><b class="cond">1998</b><span>2nd</span></div><img src="img/birthdays/1998.jpg" width="1280" height="960" alt="Tao's 2nd birthday, 1998" loading="lazy"></figure>
-          <figure><div class="yr"><b class="cond">2001</b><span>5th</span></div><img src="img/birthdays/2001.jpg" width="480" height="640" alt="Tao's 5th birthday, 2001" loading="lazy"></figure>
-          <figure><div class="yr"><b class="cond">2002</b><span>6th</span></div><img src="img/birthdays/2002.jpg" width="1280" height="960" alt="Tao's 6th birthday, 2002" loading="lazy"></figure>
-          <figure><div class="yr"><b class="cond">2003</b><span>7th</span></div><img src="img/birthdays/2003.jpg" width="960" height="1280" alt="Tao's 7th birthday, 2003" loading="lazy"></figure>
-          <figure><div class="yr"><b class="cond">2004</b><span>8th</span></div><img src="img/birthdays/2004.jpg" width="450" height="432" alt="Tao's 8th birthday, 2004" loading="lazy"></figure>
-          <figure><div class="yr"><b class="cond">2005</b><span>9th</span></div><img src="img/birthdays/2005.jpg" width="818" height="1280" alt="Tao's 9th birthday, 2005" loading="lazy"></figure>
-          <figure><div class="yr"><b class="cond">2008</b><span>12th</span></div><img src="img/birthdays/2008.jpg" width="1600" height="1200" alt="Tao's 12th birthday, 2008" loading="lazy"></figure>
-          <figure><div class="yr"><b class="cond">2009</b><span>13th</span></div><img src="img/birthdays/2009.jpg" width="604" height="453" alt="Tao's 13th birthday, 2009" loading="lazy"></figure>
-          <figure><div class="yr"><b class="cond">2010</b><span>14th</span></div><img src="img/birthdays/2010.jpg" width="1600" height="1200" alt="Tao's 14th birthday, 2010" loading="lazy"></figure>
-          <figure><div class="yr"><b class="cond">2011</b><span>15th</span></div><img src="img/birthdays/2011.jpg" width="1200" height="1600" alt="Tao's 15th birthday, 2011" loading="lazy"></figure>
-          <figure><div class="yr"><b class="cond">2012</b><span>16th</span></div><img src="img/birthdays/2012.jpg" width="1600" height="1150" alt="Tao's 16th birthday, 2012" loading="lazy"></figure>
-          <figure><div class="yr"><b class="cond">2013</b><span>17th</span></div><img src="img/birthdays/2013.jpg" width="1200" height="1600" alt="Tao's 17th birthday, 2013" loading="lazy"></figure>
-          <figure><div class="yr"><b class="cond">2014</b><span>18th</span></div><img src="img/birthdays/2014.jpg" width="1600" height="1200" alt="Tao's 18th birthday, 2014" loading="lazy"></figure>
-          <figure><div class="yr"><b class="cond">2016</b><span>20th</span></div><img src="img/birthdays/2016.jpg" width="1200" height="1600" alt="Tao's 20th birthday, 2016" loading="lazy"></figure>
-          <figure><div class="yr"><b class="cond">2017</b><span>21st</span></div><img src="img/birthdays/2017.jpg" width="1600" height="1339" alt="Tao's 21st birthday, 2017" loading="lazy"></figure>
-          <figure><div class="yr"><b class="cond">2020</b><span>24th</span></div><img src="img/birthdays/2020.jpg" width="768" height="1024" alt="Tao's 24th birthday, 2020" loading="lazy"></figure>
-          <figure><div class="yr"><b class="cond">2021</b><span>25th</span></div><img src="img/birthdays/2021.jpg" width="1200" height="1600" alt="Tao's 25th birthday, 2021" loading="lazy"></figure>
-          <figure><div class="yr"><b class="cond">2025</b><span>29th</span></div><img src="img/birthdays/2025.jpg" width="1200" height="1600" alt="Tao's 29th birthday, 2025" loading="lazy"></figure>
-          <figure><div class="yr"><b class="cond">2026</b><span>30th</span></div><img src="img/birthdays/2026.jpg" width="1200" height="1600" alt="Tao's 30th birthday, 2026" loading="lazy"></figure>
-      </div>
-    </div>
-  </section>
-
   <section>
     <div class="grid">
       <div class="sh"><h2 class="cond">The weekend</h2><nav class="subnav" aria-label="Days"><a href="#fri">Friday</a><a href="#sat">Saturday</a><a href="#sun">Sunday</a></nav></div>
@@ -329,7 +301,35 @@ section.bdays .sh{grid-column:1/-1}
     </div>
   </section>
 
-  <section class="alt short">
+  <section class="alt bdays">
+    <div class="grid">
+      <div class="sh"><h2 class="cond">Some birthday pics!</h2></div>
+      <div class="film" aria-label="Photos from each birthday, 1997 to 2026">
+          <figure><div class="yr"><b class="cond">1997</b><span>1st</span></div><img src="img/birthdays/1997.jpg" width="805" height="1280" alt="Tao's 1st birthday, 1997" loading="lazy"></figure>
+          <figure><div class="yr"><b class="cond">1998</b><span>2nd</span></div><img src="img/birthdays/1998.jpg" width="1280" height="960" alt="Tao's 2nd birthday, 1998" loading="lazy"></figure>
+          <figure><div class="yr"><b class="cond">2001</b><span>5th</span></div><img src="img/birthdays/2001.jpg" width="480" height="640" alt="Tao's 5th birthday, 2001" loading="lazy"></figure>
+          <figure><div class="yr"><b class="cond">2002</b><span>6th</span></div><img src="img/birthdays/2002.jpg" width="1280" height="960" alt="Tao's 6th birthday, 2002" loading="lazy"></figure>
+          <figure><div class="yr"><b class="cond">2003</b><span>7th</span></div><img src="img/birthdays/2003.jpg" width="960" height="1280" alt="Tao's 7th birthday, 2003" loading="lazy"></figure>
+          <figure><div class="yr"><b class="cond">2004</b><span>8th</span></div><img src="img/birthdays/2004.jpg" width="450" height="432" alt="Tao's 8th birthday, 2004" loading="lazy"></figure>
+          <figure><div class="yr"><b class="cond">2005</b><span>9th</span></div><img src="img/birthdays/2005.jpg" width="818" height="1280" alt="Tao's 9th birthday, 2005" loading="lazy"></figure>
+          <figure><div class="yr"><b class="cond">2008</b><span>12th</span></div><img src="img/birthdays/2008.jpg" width="1600" height="1200" alt="Tao's 12th birthday, 2008" loading="lazy"></figure>
+          <figure><div class="yr"><b class="cond">2009</b><span>13th</span></div><img src="img/birthdays/2009.jpg" width="604" height="453" alt="Tao's 13th birthday, 2009" loading="lazy"></figure>
+          <figure><div class="yr"><b class="cond">2010</b><span>14th</span></div><img src="img/birthdays/2010.jpg" width="1600" height="1200" alt="Tao's 14th birthday, 2010" loading="lazy"></figure>
+          <figure><div class="yr"><b class="cond">2011</b><span>15th</span></div><img src="img/birthdays/2011.jpg" width="1200" height="1600" alt="Tao's 15th birthday, 2011" loading="lazy"></figure>
+          <figure><div class="yr"><b class="cond">2012</b><span>16th</span></div><img src="img/birthdays/2012.jpg" width="1600" height="1150" alt="Tao's 16th birthday, 2012" loading="lazy"></figure>
+          <figure><div class="yr"><b class="cond">2013</b><span>17th</span></div><img src="img/birthdays/2013.jpg" width="1200" height="1600" alt="Tao's 17th birthday, 2013" loading="lazy"></figure>
+          <figure><div class="yr"><b class="cond">2014</b><span>18th</span></div><img src="img/birthdays/2014.jpg" width="1600" height="1200" alt="Tao's 18th birthday, 2014" loading="lazy"></figure>
+          <figure><div class="yr"><b class="cond">2016</b><span>20th</span></div><img src="img/birthdays/2016.jpg" width="1200" height="1600" alt="Tao's 20th birthday, 2016" loading="lazy"></figure>
+          <figure><div class="yr"><b class="cond">2017</b><span>21st</span></div><img src="img/birthdays/2017.jpg" width="1600" height="1339" alt="Tao's 21st birthday, 2017" loading="lazy"></figure>
+          <figure><div class="yr"><b class="cond">2020</b><span>24th</span></div><img src="img/birthdays/2020.jpg" width="768" height="1024" alt="Tao's 24th birthday, 2020" loading="lazy"></figure>
+          <figure><div class="yr"><b class="cond">2021</b><span>25th</span></div><img src="img/birthdays/2021.jpg" width="1200" height="1600" alt="Tao's 25th birthday, 2021" loading="lazy"></figure>
+          <figure><div class="yr"><b class="cond">2025</b><span>29th</span></div><img src="img/birthdays/2025.jpg" width="1200" height="1600" alt="Tao's 29th birthday, 2025" loading="lazy"></figure>
+          <figure><div class="yr"><b class="cond">2026</b><span>30th</span></div><img src="img/birthdays/2026.jpg" width="1200" height="1600" alt="Tao's 30th birthday, 2026" loading="lazy"></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="short">
     <div class="grid">
       <div class="sh"><h2 class="cond">What to bring</h2></div>
       <div class="body">
