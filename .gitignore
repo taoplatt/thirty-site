@@ -1,2 +1,3 @@
 .DS_Store
 src.html
+__pycache__/
