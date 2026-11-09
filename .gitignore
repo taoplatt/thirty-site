@@ -1,3 +1,5 @@
 .DS_Store
-src.html
 __pycache__/
+# readable copies, never committed: see tools/lock.py
+src.html
+img/

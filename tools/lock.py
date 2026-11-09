@@ -1,17 +1,24 @@
 #!/usr/bin/env python3
-"""Password-protect the site.
+"""Password-protect the site, page and photos.
 
-The readable page lives in src.html, which is never committed (see .gitignore).
-index.html is the published page: a password screen that holds src.html
-encrypted (PBKDF2-SHA256 + AES-256-GCM) and decrypts it in the browser.
+Readable files, never committed (see .gitignore):
+  src.html  the page
+  img/      the photos
 
-  python3 tools/lock.py unlock   # index.html -> src.html, to edit the page
-  python3 tools/lock.py lock     # src.html   -> index.html, before committing
+Committed:
+  index.html  a password screen holding src.html encrypted
+  p/*.bin     each photo, encrypted, under a meaningless name
 
-The password is read from the SITE_PASSWORD environment variable, or asked for.
-It is never written to disk.
+Everything uses one key derived from the password (PBKDF2-SHA256, AES-256-GCM).
+The browser derives the same key from the password the guest types, decrypts
+the page, then decrypts photos as their section comes near the screen.
+
+  python3 tools/lock.py unlock   # index.html + p/ -> src.html + img/, to edit
+  python3 tools/lock.py lock     # src.html + img/ -> index.html + p/, to publish
+
+The password is read from SITE_PASSWORD or asked for. It is never written to disk.
 """
-import base64, getpass, json, os, re, sys
+import base64, getpass, hashlib, hmac, json, os, re, sys
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from cryptography.hazmat.primitives import hashes
@@ -19,10 +26,13 @@ from cryptography.hazmat.primitives import hashes
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(ROOT, 'src.html')
 OUT = os.path.join(ROOT, 'index.html')
+ENC = 'p'
 ITER = 600_000
+BLANK = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
+LOADER_ID = 'enc-img-loader'
 
 
-def key(pw, salt, it=ITER):
+def derive(pw, salt, it=ITER):
     return PBKDF2HMAC(algorithm=hashes.SHA256(), length=32, salt=salt, iterations=it).derive(pw.encode())
 
 
@@ -31,6 +41,50 @@ def password():
     if not pw:
         sys.exit('No password given.')
     return pw
+
+
+b64 = lambda x: base64.b64encode(x).decode()
+unb64 = base64.b64decode
+
+
+def read_payload():
+    if not os.path.exists(OUT):
+        return None
+    m = re.search(r'var P=(\{.*?\}),K=', open(OUT).read())
+    return json.loads(m.group(1)) if m else None
+
+
+def open_page(p, key):
+    return AESGCM(key).decrypt(unb64(p['n']), unb64(p['c']), None).decode()
+
+
+def enc_name(key, path):
+    return '%s/%s.bin' % (ENC, hmac.new(key, path.encode(), hashlib.sha256).hexdigest()[:20])
+
+
+# Runs inside the decrypted page: decrypt photos near the screen.
+LOADER = '''<script id="%s">
+(function(){
+  var K=window.__K;if(!K||!window.crypto||!crypto.subtle)return;
+  function u8(s){var b=atob(s),a=new Uint8Array(b.length);for(var i=0;i<b.length;i++)a[i]=b.charCodeAt(i);return a}
+  var key=crypto.subtle.importKey('raw',u8(K),'AES-GCM',false,['decrypt']);
+  function load(img){
+    var u=img.getAttribute('data-enc');if(!u)return;img.removeAttribute('data-enc');
+    fetch(u).then(function(r){if(!r.ok)throw r.status;return r.arrayBuffer()})
+      .then(function(buf){return key.then(function(k){return crypto.subtle.decrypt({name:'AES-GCM',iv:new Uint8Array(buf,0,12)},k,new Uint8Array(buf,12))})})
+      .then(function(d){img.src=URL.createObjectURL(new Blob([d],{type:'image/jpeg'}))})
+      .catch(function(){});
+  }
+  function group(el){return el.closest('section,header,details')||document.body}
+  var groups=[];[].forEach.call(document.querySelectorAll('img[data-enc]'),function(img){var g=group(img);if(groups.indexOf(g)<0)groups.push(g)});
+  function loadGroup(g){[].forEach.call(g.querySelectorAll('img[data-enc]'),load)}
+  [].forEach.call(document.querySelectorAll('header img[data-enc]'),load);
+  if(!('IntersectionObserver' in window)){groups.forEach(loadGroup);return}
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){io.unobserve(e.target);loadGroup(e.target)}})},{rootMargin:'100%% 0px'});
+  groups.forEach(function(g){io.observe(g)});
+  document.addEventListener('toggle',function(e){if(e.target.tagName==='DETAILS'&&e.target.open)loadGroup(e.target)},true);
+})();
+</script>''' % LOADER_ID
 
 
 TEMPLATE = r'''<!doctype html>
@@ -76,13 +130,15 @@ noscript p{margin-top:16px;color:var(--grey)}
 <script>
 (function(){
   var P=__PAYLOAD__,K='tao30-pw';
-  function b64(s){var b=atob(s),a=new Uint8Array(b.length);for(var i=0;i<b.length;i++)a[i]=b.charCodeAt(i);return a}
+  function u8(s){var b=atob(s),a=new Uint8Array(b.length);for(var i=0;i<b.length;i++)a[i]=b.charCodeAt(i);return a}
+  function b64(a){var s='';for(var i=0;i<a.length;i++)s+=String.fromCharCode(a[i]);return btoa(s)}
   function open(pw){
-    var c=crypto.subtle;
-    return c.importKey('raw',new TextEncoder().encode(pw),'PBKDF2',false,['deriveKey'])
-      .then(function(k){return c.deriveKey({name:'PBKDF2',salt:b64(P.s),iterations:P.i,hash:'SHA-256'},k,{name:'AES-GCM',length:256},false,['decrypt'])})
-      .then(function(k){return c.decrypt({name:'AES-GCM',iv:b64(P.n)},k,b64(P.c))})
-      .then(function(buf){return new TextDecoder().decode(buf)});
+    var c=crypto.subtle,raw;
+    return c.importKey('raw',new TextEncoder().encode(pw),'PBKDF2',false,['deriveBits'])
+      .then(function(k){return c.deriveBits({name:'PBKDF2',salt:u8(P.s),iterations:P.i,hash:'SHA-256'},k,256)})
+      .then(function(bits){raw=new Uint8Array(bits);return c.importKey('raw',raw,'AES-GCM',false,['decrypt'])})
+      .then(function(k){return c.decrypt({name:'AES-GCM',iv:u8(P.n)},k,u8(P.c))})
+      .then(function(buf){return new TextDecoder().decode(buf).replace('<head>','<head><script>window.__K="'+b64(raw)+'"<\/script>')});
   }
   function show(h){document.open();document.write(h);document.close()}
   var f=document.getElementById('f'),pw=document.getElementById('pw'),msg=document.getElementById('msg'),keep=document.getElementById('keep');
@@ -101,31 +157,86 @@ noscript p{margin-top:16px;color:var(--grey)}
 </html>
 '''
 
+IMG_SRC = re.compile(r'(<img\b[^>]*?)\bsrc="(img/[^"]+)"')
+IMG_ENC = re.compile(r'\bsrc="' + re.escape(BLANK) + r'" data-enc="[^"]+" data-orig="([^"]+)"')
+
 
 def lock():
     if not os.path.exists(SRC):
         sys.exit('src.html not found. Run "unlock" first.')
     pw = password()
-    salt, nonce = os.urandom(16), os.urandom(12)
-    ct = AESGCM(key(pw, salt)).encrypt(nonce, open(SRC, 'rb').read(), None)
-    b = lambda x: base64.b64encode(x).decode()
-    payload = json.dumps({'s': b(salt), 'n': b(nonce), 'i': ITER, 'c': b(ct)}, separators=(',', ':'))
+    old = read_payload()
+    salt = None
+    if old:  # keep the same key when the password is unchanged, so unchanged photos keep the same files
+        try:
+            k = derive(pw, unb64(old['s']), old['i'])
+            open_page(old, k)
+            salt = unb64(old['s'])
+        except Exception:
+            pass
+    salt = salt or os.urandom(16)
+    key = derive(pw, salt)
+    aes = AESGCM(key)
+    page = open(SRC).read()
+
+    os.makedirs(os.path.join(ROOT, ENC), exist_ok=True)
+    used, wrote = set(), 0
+
+    def swap(m):
+        nonlocal wrote
+        path = m.group(2)
+        plain = open(os.path.join(ROOT, path), 'rb').read()
+        name = enc_name(key, path)
+        used.add(name)
+        dest = os.path.join(ROOT, name)
+        same = False
+        if os.path.exists(dest):
+            blob = open(dest, 'rb').read()
+            try:
+                same = aes.decrypt(blob[:12], blob[12:], None) == plain
+            except Exception:
+                pass
+        if not same:
+            n = os.urandom(12)
+            open(dest, 'wb').write(n + aes.encrypt(n, plain, None))
+            wrote += 1
+        return '%ssrc="%s" data-enc="%s" data-orig="%s"' % (m.group(1), BLANK, name, path)
+
+    page = IMG_SRC.sub(swap, page)
+    page = page.replace('</body>', LOADER + '\n</body>', 1)
+    removed = 0
+    for f in os.listdir(os.path.join(ROOT, ENC)):
+        if '%s/%s' % (ENC, f) not in used:
+            os.remove(os.path.join(ROOT, ENC, f))
+            removed += 1
+
+    nonce = os.urandom(12)
+    payload = json.dumps({'s': b64(salt), 'n': b64(nonce), 'i': ITER, 'c': b64(aes.encrypt(nonce, page.encode(), None))}, separators=(',', ':'))
     open(OUT, 'w').write(TEMPLATE.replace('__PAYLOAD__', payload))
-    print('Locked src.html -> index.html (%d KB)' % (os.path.getsize(OUT) // 1024))
+    print('Locked page and %d photos (%d re-encrypted, %d removed) -> index.html + %s/' % (len(used), wrote, removed, ENC))
 
 
 def unlock():
-    m = re.search(r'var P=(\{.*?\}),K=', open(OUT).read())
-    if not m:
+    p = read_payload()
+    if not p:
         sys.exit('index.html is not a locked page.')
-    p = json.loads(m.group(1))
-    d = lambda x: base64.b64decode(x)
+    key = derive(password(), unb64(p['s']), p['i'])
     try:
-        out = AESGCM(key(password(), d(p['s']), p['i'])).decrypt(d(p['n']), d(p['c']), None)
+        page = open_page(p, key)
     except Exception:
         sys.exit('Wrong password.')
-    open(SRC, 'wb').write(out)
-    print('Unlocked index.html -> src.html')
+    aes = AESGCM(key)
+    count = 0
+    for m in re.finditer(r'data-enc="([^"]+)" data-orig="([^"]+)"', page):
+        blob = open(os.path.join(ROOT, m.group(1)), 'rb').read()
+        dest = os.path.join(ROOT, m.group(2))
+        os.makedirs(os.path.dirname(dest), exist_ok=True)
+        open(dest, 'wb').write(aes.decrypt(blob[:12], blob[12:], None))
+        count += 1
+    page = IMG_ENC.sub(lambda m: 'src="%s"' % m.group(1), page)
+    page = page.replace('\n' + LOADER, '', 1)
+    open(SRC, 'w').write(page)
+    print('Unlocked index.html + %d photos -> src.html + img/' % count)
 
 
 if __name__ == '__main__':
