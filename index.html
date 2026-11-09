@@ -90,6 +90,18 @@ section.alt .strip img{background:var(--rule)}
 .dress::before,.dress::after{content:"";flex:1;height:2px;background:var(--blue)}
 .dress b{flex:none;font-stretch:62%;font-weight:800;text-transform:uppercase;font-size:1.35rem;letter-spacing:.01em;color:var(--blue)}
 .dressed .row:first-of-type{border-top:0}
+/* outfit ideas: a fold-out strip of same-height photos under Saturday evening */
+.row .w{min-width:0}
+.ideas{margin-top:10px;font-size:.95rem;min-width:0;max-width:100%}
+.ideas summary{display:inline-flex;align-items:center;gap:8px;cursor:pointer;list-style:none;color:var(--ink);text-decoration:underline;text-decoration-color:var(--orange);text-decoration-thickness:2px;text-underline-offset:.25em}
+.ideas summary::-webkit-details-marker{display:none}
+.ideas summary::after{content:"+";font-weight:600;color:var(--orange)}
+.ideas[open] summary::after{content:"\2212"}
+.ideas summary:hover{color:var(--orange)}
+.ideas-strip{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;margin-top:14px;padding-bottom:8px;scrollbar-width:thin}
+.ideas-strip figure{flex:0 0 auto;margin:0;scroll-snap-align:start}
+.ideas-strip img{height:clamp(220px,34vh,320px);width:auto;max-width:72vw;object-fit:cover;display:block;background:var(--rule)}
+.ideas-strip figcaption{font-size:.82rem;color:var(--grey);padding-top:6px;max-width:220px;font-weight:400}
 .dressed .row .t,.dressed .row .w{color:var(--blue)}
 .dressed .row .w small{color:color-mix(in srgb,var(--blue) 72%,var(--bg))}
 @media (max-width:520px){.row{grid-template-columns:92px 1fr}}
@@ -182,7 +194,25 @@ section.house .strip-wrap{align-self:center;margin-top:24px}
             <div class="row"><span class="t">Afternoon</span><span class="w">Afternoon chill</span></div>
             <div class="dressed">
               <p class="dress"><b>Birthday party</b></p>
-              <div class="row"><span class="t">Evening</span><span class="w">Dinner, drinks and dancing<small>Ottolenghi-style vegetarian dinner to kick off the evening. Dress code: winter cocktail, with some blue in it!</small></span></div>
+              <div class="row"><span class="t">Evening</span><span class="w">Dinner, drinks and dancing<small>Ottolenghi-style vegetarian dinner to kick off the evening. Dress code: smart casual to cocktail, with some blue in it!</small>
+                <details class="ideas">
+                  <summary>Outfit ideas</summary>
+                  <div class="ideas-strip">
+                  <figure><img src="img/outfits/m-blue-suit.jpg" alt="Blue wool suit and a striped shirt" loading="lazy"><figcaption>Blue wool suit and a striped shirt</figcaption></figure>
+                  <figure><img src="img/outfits/w-whistles-jumpsuit.jpg" alt="Navy jumpsuit" loading="lazy"><figcaption>Navy jumpsuit</figcaption></figure>
+                  <figure><img src="img/outfits/m-cream-db.jpg" alt="Cream double-breasted jacket, dark trousers" loading="lazy"><figcaption>Cream double-breasted jacket, dark trousers</figcaption></figure>
+                  <figure><img src="img/outfits/w-reformation.jpg" alt="Silk slip dress" loading="lazy"><figcaption>Silk slip dress</figcaption></figure>
+                  <figure><img src="img/outfits/m-navy-overshirt.jpg" alt="Navy overshirt over a fine knit" loading="lazy"><figcaption>Navy overshirt over a fine knit</figcaption></figure>
+                  <figure><img src="img/outfits/w-1.jpg" alt="Silky shirt and wide-leg trousers" loading="lazy"><figcaption>Silky shirt and wide-leg trousers</figcaption></figure>
+                  <figure><img src="img/outfits/m-tweed-denim.jpg" alt="Tweed jacket over a denim shirt" loading="lazy"><figcaption>Tweed jacket over a denim shirt</figcaption></figure>
+                  <figure><img src="img/outfits/w-2.jpg" alt="Polka-dot midi dress" loading="lazy"><figcaption>Polka-dot midi dress</figcaption></figure>
+                  <figure><img src="img/outfits/m-darkbrown.jpg" alt="Dark knit polo and wide trousers" loading="lazy"><figcaption>Dark knit polo and wide trousers</figcaption></figure>
+                  <figure><img src="img/outfits/w-asos-black.jpg" alt="Black column dress" loading="lazy"><figcaption>Black column dress</figcaption></figure>
+                  <figure><img src="img/outfits/m-sage-suit.jpg" alt="Relaxed suit with a T-shirt" loading="lazy"><figcaption>Relaxed suit with a T-shirt</figcaption></figure>
+                  <figure><img src="img/outfits/w-blk.jpg" alt="Black top and wide-leg trousers" loading="lazy"><figcaption>Black top and wide-leg trousers</figcaption></figure>
+                  </div>
+                </details>
+              </span></div>
             </div>
           </div>
           <div class="sub" id="sun">
@@ -262,7 +292,7 @@ section.house .strip-wrap{align-self:center;margin-top:24px}
       <div class="body">
         <ul class="bring" style="margin:0">
           <li><label><input type="checkbox" data-k="0"><span>Warm layers and a coat</span></label></li>
-          <li><label><input type="checkbox" data-k="1"><span>A winter cocktail outfit with some blue in it, for Saturday night</span></label></li>
+          <li><label><input type="checkbox" data-k="1"><span>A smart casual to cocktail outfit with some blue in it, for Saturday night</span></label></li>
           <li><label><input type="checkbox" data-k="2"><span>Running, swimming or tennis kit, if you'd like to join in</span></label></li>
           <li><label><input type="checkbox" data-k="3"><span>A game you'd like to play, if you have one: a board game, cards or anything else</span></label></li>
           <li><label><input type="checkbox" data-k="4"><span>A camera</span></label></li>
