@@ -13,19 +13,20 @@
 /* One family (Archivo) across its width axis: condensed for display, normal for reading.
    The photo stays pinned; the page slides over it. */
 :root{
-  --bg:#ffffff;--ink:#101010;--grey:#707070;--rule:#e6e6e6;--blue:#2b45b8;
+  --bg:#ffffff;--ink:#13203a;--grey:#5d6b82;--rule:#e1e8f1;--blue:#24407a;--baby:#bcd6f0;--orange:#ee8a3c;
   --f:"Archivo","Helvetica Neue",Arial,sans-serif;
   --gut:max(20px,env(safe-area-inset-left,0px));
   color-scheme:light;
 }
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f0f0f;--ink:#f1f1f1;--grey:#9a9a9a;--rule:#262626;--blue:#9fb3ff;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0f0f0f;--ink:#f1f1f1;--grey:#9a9a9a;--rule:#262626;--blue:#9fb3ff;color-scheme:dark}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1626;--ink:#e9eff7;--grey:#9aa8bd;--rule:#24324b;--blue:#a9c6ea;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e1626;--ink:#e9eff7;--grey:#9aa8bd;--rule:#24324b;--blue:#a9c6ea;color-scheme:dark}
 *{box-sizing:border-box}
 body{margin:0;background:#000;color:var(--ink);font:400 17px/1.5 var(--f);-webkit-font-smoothing:antialiased}
 img{display:block;max-width:100%}
 a{color:inherit;text-decoration-thickness:1px;text-underline-offset:.2em}
-a:hover{color:var(--blue)}
-:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+a:hover{color:var(--orange)}
+:focus-visible{outline:2px solid var(--orange);outline-offset:3px}
+.hero h1 .thirty{color:var(--baby,#bcd6f0)}
 .cond{font-stretch:62%;font-weight:800;text-transform:uppercase;letter-spacing:-.005em;line-height:.88}
 
 /* ---- hero: pinned photo ---- */
@@ -48,10 +49,12 @@ section{min-height:100vh;min-height:100svh;padding:72px 0 80px;border-top:1px so
 section.short{min-height:0}
 section:first-child{border-top:0}
 /* alternate sections: crayon blue, everything inside switches via the tokens */
-section.alt{--bg:#2b45b8;--ink:#ffffff;--grey:rgba(255,255,255,.72);--rule:rgba(255,255,255,.24);--blue:#c9dcf3;background:var(--bg);color:var(--ink);border-top:0}
+section.alt{--bg:#e4eefa;--rule:#c8d9ed;background:var(--bg);color:var(--ink);border-top:0}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) section.alt{--bg:#172440;--rule:#2b3c5c}}
+:root[data-theme="dark"] section.alt{--bg:#172440;--rule:#2b3c5c}
 section.alt + section{border-top:0}
-section.alt a:hover{color:var(--blue)}
-section.alt .strip img{background:rgba(255,255,255,.12)}
+section.alt a:hover{color:var(--orange)}
+section.alt .strip img{background:var(--rule)}
 .sh{grid-column:1/5;align-self:start;position:sticky;top:28px}
 .sh h2{margin:0;font-size:clamp(2.6rem,5vw,4.4rem)}
 .body{grid-column:5/13;min-width:0}
@@ -76,7 +79,7 @@ section.alt .strip img{background:rgba(255,255,255,.12)}
 .subnav a::before{content:"";width:10px;height:2px;background:currentColor;transition:width .3s,background .2s}
 .subnav a:hover{color:var(--ink)}
 .subnav a.on{color:var(--ink)}
-.subnav a.on::before{width:28px;background:var(--blue)}
+.subnav a.on::before{width:28px;background:var(--orange)}
 @media (max-width:900px){.subnav{display:none}}
 .row{display:grid;grid-template-columns:120px 1fr;gap:16px;padding:14px 0;border-top:1px solid var(--rule);align-items:baseline}
 .row .t{color:var(--grey);font-size:.95rem}
@@ -87,6 +90,17 @@ section.alt .strip img{background:rgba(255,255,255,.12)}
 .dress::before,.dress::after{content:"";flex:1;height:2px;background:var(--blue)}
 .dress b{flex:none;font-stretch:62%;font-weight:800;text-transform:uppercase;font-size:1.35rem;letter-spacing:.01em;color:var(--blue)}
 .dressed .row:first-of-type{border-top:0}
+/* outfit ideas: a fold-out strip of same-height photos under Saturday evening */
+.row .w{min-width:0}
+.ideas{margin-top:10px;font-size:.95rem;min-width:0;max-width:100%}
+.ideas summary{display:inline-flex;align-items:center;gap:8px;cursor:pointer;list-style:none;color:var(--ink);text-decoration:underline;text-decoration-color:var(--orange);text-decoration-thickness:2px;text-underline-offset:.25em}
+.ideas summary::-webkit-details-marker{display:none}
+.ideas summary::after{content:"+";font-weight:600;color:var(--orange)}
+.ideas[open] summary::after{content:"\2212"}
+.ideas summary:hover{color:var(--orange)}
+.ideas-strip{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;margin-top:14px;padding-bottom:8px;scrollbar-width:thin}
+.ideas-strip figure{flex:0 0 auto;margin:0;scroll-snap-align:start}
+.ideas-strip img{height:clamp(220px,34vh,320px);width:auto;max-width:72vw;object-fit:cover;display:block;background:var(--rule)}
 .dressed .row .t,.dressed .row .w{color:var(--blue)}
 .dressed .row .w small{color:color-mix(in srgb,var(--blue) 72%,var(--bg))}
 @media (max-width:520px){.row{grid-template-columns:92px 1fr}}
@@ -106,12 +120,11 @@ section.house .strip-wrap{align-self:center;margin-top:24px}
 .strip figure{flex:0 0 auto;margin:0;scroll-snap-align:start}
 .strip img{height:var(--h);width:auto;max-width:calc(100vw - 2 * var(--gut));object-fit:cover;background:var(--rule);user-select:none;-webkit-user-drag:none}
 @media (max-width:640px){.strip{--h:clamp(200px,40vh,380px)}}
-.strip figcaption{display:flex;justify-content:space-between;font-size:.9rem;color:var(--grey);padding-top:10px}
+.strip figcaption{font-size:.9rem;color:var(--grey);padding-top:10px}
 .strip-ctl{display:flex;justify-content:space-between;align-items:center;padding:18px var(--gut) 0;font-size:.95rem}
 .strip-ctl button{font:inherit;color:inherit;background:none;border:0;padding:6px 0;cursor:pointer;text-decoration:underline;text-underline-offset:.2em}
-.strip-ctl button:hover{color:var(--blue)}
+.strip-ctl button:hover{color:var(--orange)}
 .strip-ctl button:disabled{opacity:.3;cursor:default;text-decoration:none}
-.strip-ctl .ctr{color:var(--grey);font-variant-numeric:tabular-nums}
 
 /* travel */
 .addr{font-size:clamp(1.8rem,3.6vw,3rem);margin:0 0 18px}
@@ -131,13 +144,18 @@ section.house .strip-wrap{align-self:center;margin-top:24px}
 .body > p{max-width:58ch}
 
 /* bring */
-.bring{list-style:none;margin:0 0 40px;padding:0;counter-reset:b;max-width:46rem}
-.bring li{break-inside:avoid;padding:12px 0;border-top:1px solid var(--rule);font-size:1.2rem;counter-increment:b;display:flex;gap:16px}
-.bring li::before{content:counter(b,decimal-leading-zero);color:var(--blue);font-size:.9rem;padding-top:.25em;font-variant-numeric:tabular-nums}
+.bring{list-style:none;margin:0 0 40px;padding:0;max-width:46rem}
+.bring li{border-top:1px solid var(--rule);font-size:1.2rem}
+.bring label{display:flex;gap:16px;align-items:flex-start;padding:12px 0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.bring input{appearance:none;-webkit-appearance:none;flex:none;width:22px;height:22px;margin:3px 0 0;border:1.5px solid currentColor;border-radius:4px;display:grid;place-items:center;cursor:pointer;transition:background .2s,border-color .2s}
+.bring input::after{content:"";width:10px;height:5px;border:2px solid var(--bg);border-top:0;border-right:0;transform:rotate(-45deg) translate(1px,-1px) scale(0);transition:transform .2s}
+.bring input:checked{background:var(--orange);border-color:var(--orange)}
+.bring input:checked::after{transform:rotate(-45deg) translate(1px,-1px) scale(1)}
+.bring label small{display:block;font-size:.95rem;color:var(--grey);margin-top:2px}
+.bring input:checked + span:has(.it){text-decoration:none}
+.bring input:checked + span .it{text-decoration:line-through;text-decoration-color:var(--orange)}
+.bring input:checked + span{opacity:.6;text-decoration:line-through;text-decoration-color:var(--orange)}
 
-footer{position:relative;z-index:1;background:var(--ink);color:var(--bg);padding:80px var(--gut) max(40px,env(safe-area-inset-bottom,0px))}
-footer p.cond{margin:0;font-size:clamp(2.6rem,8vw,7.5rem)}
-footer .meta{border-top-color:color-mix(in srgb,var(--bg) 30%,transparent);margin-top:48px}
 </style>
 </head>
 <body>
@@ -146,7 +164,7 @@ footer .meta{border-top-color:color-mix(in srgb,var(--bg) 30%,transparent);margi
   <img src="img/tao-crown.jpg" alt="Tao as a small child in a homemade paper crown, chin in hands" width="1280" height="875" fetchpriority="high">
   <div class="shade"></div>
   <div class="hero-in">
-    <h1 class="cond">Tao's 30th<br>birthday weekend</h1>
+    <h1 class="cond">Tao's <span class="thirty">30th</span><br>birthday weekend</h1>
     <div class="meta">
       <span>Friday 13 – Sunday 15 November 2026</span>
       <span>Talton House, Newbold on Stour</span>
@@ -170,12 +188,32 @@ footer .meta{border-top-color:color-mix(in srgb,var(--bg) 30%,transparent);margi
           </div>
           <div class="sub" id="sat">
             <h3 class="subh cond">Saturday <span>14 November</span></h3>
-            <div class="row"><span class="t">Morning</span><span class="w">Help-yourself breakfast, then an optional run and swim</span></div>
-            <div class="row"><span class="t">Midday</span><span class="w">Brunch at the pub</span></div>
-            <div class="row"><span class="t">Afternoon</span><span class="w">A slow afternoon at the house<small>Snooker and table tennis in the games room, tennis, board games, or nothing at all.</small></span></div>
+            <div class="row"><span class="t">Morning</span><span class="w">Help-yourself breakfast, then a run and a swim if you fancy it</span></div>
+            <div class="row"><span class="t">Midday</span><span class="w">Brunch / lunch at the pub</span></div>
+            <div class="row"><span class="t">Afternoon</span><span class="w">Afternoon chill</span></div>
             <div class="dressed">
               <p class="dress"><b>Birthday party</b></p>
-              <div class="row"><span class="t">Evening</span><span class="w">Dinner, drinks and dancing<small>Ottolenghi-style vegetarian dinner to kick off the evening. Wear something nice, with some blue in it!</small></span></div>
+              <div class="row"><span class="t">Evening</span><span class="w">Dinner, drinks and dancing<small>Ottolenghi-style vegetarian dinner to kick off the evening. Dress code: smart casual to cocktail, with some blue in it!</small>
+                <details class="ideas">
+                  <summary>Outfit ideas</summary>
+                  <div class="ideas-strip">
+                  <figure><img src="img/outfits/m-blue-suit.jpg" alt="Blue wool suit and a striped shirt" loading="lazy"></figure>
+                  <figure><img src="img/outfits/w-whistles-jumpsuit.jpg" alt="Navy jumpsuit" loading="lazy"></figure>
+                  <figure><img src="img/outfits/m-cream-db.jpg" alt="Cream double-breasted jacket, dark trousers" loading="lazy"></figure>
+                  <figure><img src="img/outfits/w-reformation.jpg" alt="Silk slip dress" loading="lazy"></figure>
+                  <figure><img src="img/outfits/m-navy-overshirt.jpg" alt="Navy overshirt over a fine knit" loading="lazy"></figure>
+                  <figure><img src="img/outfits/w-1.jpg" alt="Silky shirt and wide-leg trousers" loading="lazy"></figure>
+                  <figure><img src="img/outfits/m-tweed-denim.jpg" alt="Tweed jacket over a denim shirt" loading="lazy"></figure>
+                  <figure><img src="img/outfits/w-2.jpg" alt="Polka-dot midi dress" loading="lazy"></figure>
+                  <figure><img src="img/outfits/m-darkbrown.jpg" alt="Dark knit polo and wide trousers" loading="lazy"></figure>
+                  <figure><img src="img/outfits/w-asos-black.jpg" alt="Black column dress" loading="lazy"></figure>
+                  <figure><img src="img/outfits/m-sage-suit.jpg" alt="Relaxed suit with a T-shirt" loading="lazy"></figure>
+                  <figure><img src="img/outfits/w-blk.jpg" alt="Black top and wide-leg trousers" loading="lazy"></figure>
+                  <figure><img src="img/outfits/w-navy-cape.jpg" alt="Navy draped mini dress with tights" loading="lazy"></figure>
+                  <figure><img src="img/outfits/w-black-velvet.jpg" alt="Black velvet mini dress" loading="lazy"></figure>
+                  </div>
+                </details>
+              </span></div>
             </div>
           </div>
           <div class="sub" id="sun">
@@ -196,20 +234,20 @@ footer .meta{border-top-color:color-mix(in srgb,var(--bg) 30%,transparent);margi
       </div>
       <div class="strip-wrap">
         <div class="strip" id="strip">
-          <figure><img src="img/house-river.jpg" width="1600" height="1143" alt="The house from across the river" loading="lazy"><figcaption><span>The house</span><span>01</span></figcaption></figure>
-          <figure><img src="img/lawn.jpg" width="1600" height="1143" alt="The lawn" loading="lazy"><figcaption><span>The lawn</span><span>02</span></figcaption></figure>
-          <figure><img src="img/pool.jpg" width="1600" height="1204" alt="The natural pool" loading="lazy"><figcaption><span>Natural pool</span><span>03</span></figcaption></figure>
-          <figure><img src="img/tennis.jpg" width="1600" height="1143" alt="The tennis court" loading="lazy"><figcaption><span>Tennis court</span><span>04</span></figcaption></figure>
-          <figure><img src="img/hall.jpg" width="1600" height="1066" alt="The hall" loading="lazy"><figcaption><span>Hall</span><span>05</span></figcaption></figure>
-          <figure><img src="img/drawing-room.jpg" width="1600" height="1066" alt="The drawing room" loading="lazy"><figcaption><span>Drawing room</span><span>06</span></figcaption></figure>
-          <figure><img src="img/kitchen.jpg" width="1600" height="1205" alt="The kitchen" loading="lazy"><figcaption><span>Kitchen</span><span>07</span></figcaption></figure>
-          <figure><img src="img/games-room.jpg" width="1600" height="1142" alt="The games room" loading="lazy"><figcaption><span>Games room</span><span>08</span></figcaption></figure>
-          <figure><img src="img/bedroom.jpg" width="1600" height="1067" alt="A double bedroom" loading="lazy"><figcaption><span>Bedroom</span><span>09</span></figcaption></figure>
-          <figure><img src="img/twin-room.jpg" width="1600" height="1084" alt="A twin bedroom" loading="lazy"><figcaption><span>Bedroom</span><span>10</span></figcaption></figure>
-          <figure><img src="img/twin-room-2.jpg" width="1600" height="1067" alt="Another twin bedroom" loading="lazy"><figcaption><span>Bedroom</span><span>11</span></figcaption></figure>
-          <figure><img src="img/garden-room.jpg" width="1600" height="1142" alt="A bedroom with a day bed" loading="lazy"><figcaption><span>Bedroom</span><span>12</span></figcaption></figure>
+          <figure><img src="img/house-river.jpg" width="1600" height="1143" alt="The house from across the river" loading="lazy"><figcaption>The house</figcaption></figure>
+          <figure><img src="img/lawn.jpg" width="1600" height="1143" alt="The lawn" loading="lazy"><figcaption>The lawn</figcaption></figure>
+          <figure><img src="img/pool.jpg" width="1600" height="1204" alt="The natural pool" loading="lazy"><figcaption>Natural pool</figcaption></figure>
+          <figure><img src="img/tennis.jpg" width="1600" height="1143" alt="The tennis court" loading="lazy"><figcaption>Tennis court</figcaption></figure>
+          <figure><img src="img/hall.jpg" width="1600" height="1066" alt="The hall" loading="lazy"><figcaption>Hall</figcaption></figure>
+          <figure><img src="img/drawing-room.jpg" width="1600" height="1066" alt="The drawing room" loading="lazy"><figcaption>Drawing room</figcaption></figure>
+          <figure><img src="img/kitchen.jpg" width="1600" height="1205" alt="The kitchen" loading="lazy"><figcaption>Kitchen</figcaption></figure>
+          <figure><img src="img/games-room.jpg" width="1600" height="1142" alt="The games room" loading="lazy"><figcaption>Games room</figcaption></figure>
+          <figure><img src="img/bedroom.jpg" width="1600" height="1067" alt="A double bedroom" loading="lazy"><figcaption>Bedroom</figcaption></figure>
+          <figure><img src="img/twin-room.jpg" width="1600" height="1084" alt="A twin bedroom" loading="lazy"><figcaption>Bedroom</figcaption></figure>
+          <figure><img src="img/twin-room-2.jpg" width="1600" height="1067" alt="Another twin bedroom" loading="lazy"><figcaption>Bedroom</figcaption></figure>
+          <figure><img src="img/garden-room.jpg" width="1600" height="1142" alt="A bedroom with a day bed" loading="lazy"><figcaption>Bedroom</figcaption></figure>
         </div>
-        <div class="strip-ctl"><button type="button" id="prev">Previous</button><span class="ctr" id="ctr">01 / 12</span><button type="button" id="next">Next</button></div>
+        <div class="strip-ctl"><button type="button" id="prev">Previous</button><button type="button" id="next">Next</button></div>
       </div>
     </div>
   </section>
@@ -223,16 +261,16 @@ footer .meta{border-top-color:color-mix(in srgb,var(--bg) 30%,transparent);margi
         <div class="subs" data-subs>
           <div class="sub" id="train">
             <h3 class="subh cond">By train</h3>
-            <p>Paddington to Moreton-in-Marsh is direct and takes about 1h30. It's then a 20-minute cab to the house. Double-check train times before you book.</p>
+            <p>Paddington to Moreton-in-Marsh is direct and takes about 1h30, then it's a 20-minute cab to the house. It's a good idea to double-check train times before you book.</p>
         <div class="trains">
-          <div><h4>Friday, there for 3pm</h4><p>11:52 <span>13:22</span></p><p>12:52 <span>14:22</span></p></div>
+          <div><h4>Friday afternoon</h4><p>12:52 <span>14:22</span></p><p>13:50 <span>15:18</span></p><p>14:53 <span>16:18</span></p></div>
           <div><h4>Friday evening</h4><p>16:58 <span>18:24</span></p><p>17:57 <span>19:28</span></p><p>18:57 <span>20:21</span></p></div>
           <div><h4>Saturday morning</h4><p>07:53 <span>09:18</span></p><p>08:52 <span>10:18</span></p><p>09:50 <span>11:18</span></p></div>
         </div>
           </div>
           <div class="sub" id="cab">
             <h3 class="subh cond">Cabs from Moreton</h3>
-            <p>Book ahead, especially for evening trains, and post your train in the group chat so people can share.</p>
+            <p>Please book a cab ahead, especially for evening trains, and please post your train in the group chat so people can share.</p>
         <div class="cabs">
           <a href="tel:+441608650343"><span>ETC Taxis</span><span>01608 650343</span></a>
           <a href="tel:+447399722777"><span>Andy's Taxis</span><span>07399 722777</span></a>
@@ -241,7 +279,7 @@ footer .meta{border-top-color:color-mix(in srgb,var(--bg) 30%,transparent);margi
           </div>
           <div class="sub" id="car">
             <h3 class="subh cond">Driving</h3>
-            <p>About 2 hours from London via the M40. If you have spare seats, offer them in the group chat.</p>
+            <p>About 2 hours from London via the M40. Please offer any spare seats in the group chat if you can!</p>
           </div>
         </div>
         <div class="map" id="map"></div>
@@ -254,22 +292,18 @@ footer .meta{border-top-color:color-mix(in srgb,var(--bg) 30%,transparent);margi
       <div class="sh"><h2 class="cond">What to bring</h2></div>
       <div class="body">
         <ul class="bring" style="margin:0">
-          <li>Warm layers and a coat</li>
-          <li>A nice outfit with blue in it, for Saturday night dinner and dancing</li>
-          <li>Running, swimming or tennis kit, if you'd like to join in</li>
-          <li>A game you'd like to play, if you have one: a board game, cards or anything else</li>
-          <li>A camera</li>
-          <li>Drinks!</li>
+          <li><label><input type="checkbox" data-k="0"><span>Warm layers and a coat</span></label></li>
+          <li><label><input type="checkbox" data-k="1"><span>A smart casual to cocktail outfit with some blue in it, for Saturday night</span></label></li>
+          <li><label><input type="checkbox" data-k="2"><span>Running, swimming or tennis kit, if you'd like to join in</span></label></li>
+          <li><label><input type="checkbox" data-k="3"><span>A game you'd like to play, if you have one: a board game, cards or anything else</span></label></li>
+          <li><label><input type="checkbox" data-k="4"><span>A camera</span></label></li>
+          <li><label><input type="checkbox" data-k="5"><span><span class="it">Drinks!</span><small>I'll cover the food and some drinks, but not enough for everyone, so please bring some to share.</small></span></label></li>
         </ul>
       </div>
     </div>
   </section>
 </div>
 
-<footer>
-  <p class="cond">Any questions,<br>message Tao.</p>
-  <div class="meta"><span>Friday 13 – Sunday 15 November 2026</span><span>Talton House</span><span>CV37 8UB</span></div>
-</footer>
 
 <script>
 (function(){
@@ -280,10 +314,10 @@ footer .meta{border-top-color:color-mix(in srgb,var(--bg) 30%,transparent);margi
   if(!reduce){addEventListener('scroll',function(){if(!tick){tick=true;requestAnimationFrame(upd)}},{passive:true});upd()}
 
   // photo strip: buttons, counter, drag on desktop
-  var s=document.getElementById('strip'),figs=[].slice.call(s.children),prev=document.getElementById('prev'),next=document.getElementById('next'),ctr=document.getElementById('ctr');
+  var s=document.getElementById('strip'),figs=[].slice.call(s.children),prev=document.getElementById('prev'),next=document.getElementById('next'),ctr=null;
   function idx(){var x=s.scrollLeft,best=0;figs.forEach(function(f,i){if(Math.abs(f.offsetLeft-s.offsetLeft-parseFloat(getComputedStyle(s).paddingLeft)-x)<Math.abs(figs[best].offsetLeft-s.offsetLeft-parseFloat(getComputedStyle(s).paddingLeft)-x))best=i});return best}
   function pad(n){return n<10?'0'+n:''+n}
-  function sync(){var i=idx();ctr.textContent=pad(i+1)+' / '+figs.length;prev.disabled=s.scrollLeft<4;next.disabled=s.scrollLeft>s.scrollWidth-s.clientWidth-4}
+  function sync(){var i=idx();prev.disabled=s.scrollLeft<4;next.disabled=s.scrollLeft>s.scrollWidth-s.clientWidth-4}
   function go(d){var i=Math.max(0,Math.min(figs.length-1,idx()+d));s.scrollTo({left:figs[i].offsetLeft-figs[0].offsetLeft,behavior:reduce?'auto':'smooth'})}
   prev.onclick=function(){go(-1)};next.onclick=function(){go(1)};
   s.addEventListener('scroll',function(){requestAnimationFrame(sync)},{passive:true});sync();
@@ -305,6 +339,10 @@ footer .meta{border-top-color:color-mix(in srgb,var(--bg) 30%,transparent);margi
     addEventListener('scroll',function(){if(!raf)raf=requestAnimationFrame(spy)},{passive:true});
     spy();
   });
+
+  // packing list ticks, remembered on this device only
+  var KEY='talton-bring',got={};try{got=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){}
+  [].forEach.call(document.querySelectorAll('.bring input'),function(b){var k=b.getAttribute('data-k');b.checked=!!got[k];b.addEventListener('change',function(){got[k]=b.checked;try{localStorage.setItem(KEY,JSON.stringify(got))}catch(e){}})});
 
   // live map where embeds are allowed
   if(!/claude/.test(location.hostname)){var f=document.createElement('iframe');f.src="https://www.google.com/maps?q=Talton+House,+Newbold+on+Stour,+CV37+8UB&z=11&output=embed";f.title="Map of Talton House";f.loading="lazy";document.getElementById('map').appendChild(f)}
